@@ -102,6 +102,32 @@ const fleet = [
       'Flanged O-Ring Sealing',
     ],
   },
+  {
+    id: 'cusv' as const,
+    name: 'KAYRA C-USV',
+    subtitle: 'Catamaran Surface Vehicle',
+    turkishName: 'C-USV - Katamaran İnsansız Deniz Aracı',
+    icon: Waves,
+    description: 'Autonomous catamaran surface vessel powered by Jetson Orin Nano Super running ROS 2 Jazzy on Ubuntu 24.04. Features 3D LiDAR, stereo camera, and AI-powered computer vision with OpenCV & YOLO.',
+    color: 'from-ocean-DEFAULT to-cyan-DEFAULT',
+    bgColor: 'from-ocean-DEFAULT/20 to-cyan-DEFAULT/10',
+    specs: [
+      { icon: Ruler, label: 'Dimensions', value: '80x24x23cm' },
+      { icon: Gauge, label: 'Speed', value: '6 kts' },
+      { icon: Timer, label: 'Operation', value: '5+ hours' },
+      { icon: Weight, label: 'Payload', value: '50 kg' },
+      { icon: Battery, label: 'Computer', value: 'Jetson Orin' },
+      { icon: Radio, label: 'Range', value: '40+ km' },
+    ],
+    capabilities: [
+      'Jetson Orin Nano Super',
+      'ROS 2 Jazzy + Ubuntu 24.04',
+      '3D LiDAR & Stereo Camera',
+      'OpenCV + YOLO AI Vision',
+      'Dual-Motor Propulsion',
+      'Point Cloud Processing',
+    ],
+  },
 ]
 
 export default function FleetShowcase() {

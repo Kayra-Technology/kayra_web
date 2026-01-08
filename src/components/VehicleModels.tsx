@@ -8,8 +8,6 @@ import { STLLoader } from 'three-stdlib'
 
 // --- High-Fidelity Materials ---
 
-// --- High-Fidelity Materials ---
-
 const hullMaterial = new THREE.MeshStandardMaterial({
     color: '#152C55', // Lighter Navy for better visibility
     roughness: 0.3, // Smoother/Shinier surface ("parlak")
@@ -230,4 +228,33 @@ export function ROVModel(props: any) {
     )
 }
 
+// --- C-USV Model (Catamaran Unmanned Surface Vehicle) - STL LOADED ---
 
+export function CUSVModel(props: any) {
+    const geometry = useLoader(STLLoader, '/models/cusv.stl')
+    const meshRef = useRef<THREE.Mesh>(null)
+
+    useMemo(() => {
+        if (geometry) {
+            geometry.computeVertexNormals()
+        }
+    }, [geometry])
+
+    return (
+        <group {...props} dispose={null}>
+            <Center top>
+                <mesh
+                    ref={meshRef}
+                    geometry={geometry}
+                    material={hullMaterial}
+                    rotation={[-Math.PI / 2, 0, 0]}
+                    scale={0.1}
+                >
+                </mesh>
+            </Center>
+            <mesh position={[0, 0.5, 0]}>
+                <pointLight distance={3} intensity={2} color="#00F0FF" />
+            </mesh>
+        </group>
+    )
+}
