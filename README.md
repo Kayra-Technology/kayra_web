@@ -82,3 +82,4 @@ import Image from 'next/image'
 ```
 
 Place your image in the `public/` folder.
+
