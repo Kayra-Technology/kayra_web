@@ -4,10 +4,10 @@ import { Suspense, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Stage, Float, Environment, PerspectiveCamera } from '@react-three/drei'
 import { EffectComposer, Bloom, Noise, Vignette } from '@react-three/postprocessing'
-import { USVModel, UAVModel, ROVModel, CUSVModel } from './VehicleModels'
+import { USVModel, UAVModel, ROVModel, CUSVModel, RocketModel } from './VehicleModels'
 
 interface ModelViewerProps {
-    vehicleId: 'usv' | 'uav' | 'rov' | 'cusv';
+    vehicleId: 'usv' | 'uav' | 'rov' | 'cusv' | 'rocket' | 'torpedo';
 }
 
 // Loading placeholder component
@@ -54,6 +54,9 @@ export default function ModelViewer({ vehicleId }: ModelViewerProps) {
                             {vehicleId === 'uav' && <UAVModel />}
                             {vehicleId === 'rov' && <ROVModel />}
                             {vehicleId === 'cusv' && <CUSVModel />}
+                            {vehicleId === 'rocket' && <RocketModel />}
+                            {/* Representative visual — actual torpedo model TBD */}
+                            {vehicleId === 'torpedo' && <RocketModel />}
                         </Stage>
                     </Float>
 

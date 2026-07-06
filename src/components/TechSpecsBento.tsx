@@ -4,159 +4,179 @@ import { motion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import {
   Brain, Disc3, Satellite, Anchor, Zap, Eye, Shield, Gauge,
-  Waves, Plane, Radio, Navigation, Camera, Wifi, Battery, Cpu
+  Waves, Plane, Radio, Navigation, Camera, Battery, Cpu, Rocket, Umbrella
 } from 'lucide-react'
 
 const platformTabs = [
   { id: 'all', label: 'All Platforms', icon: Brain },
   { id: 'usv', label: 'USV', icon: Waves },
+  { id: 'cusv', label: 'C-USV', icon: Waves },
   { id: 'uav', label: 'UAV', icon: Plane },
   { id: 'rov', label: 'ROV', icon: Anchor },
+  { id: 'rocket', label: 'Rocket', icon: Rocket },
 ]
 
 const techSpecs = [
   {
-    title: 'Hybrid & Electric Power',
-    icon: Zap,
-    detail: 'Optimized hybrid-electric power architecture designed for high-efficiency energy distribution, adaptive load control, and continuous mission reliability.',
-    stats: { label: 'USV Endurance', value: '10h' },
+    title: 'Edge AI Computing',
+    icon: Brain,
+    detail: 'Jetson Orin Nano Super running ROS 2 for onboard autonomy — real-time point cloud processing and YOLO-based computer vision at the edge.',
+    stats: { label: 'Compute', value: 'Jetson Orin' },
     size: 'large',
-    gradient: 'from-cyan-DEFAULT/20 to-ocean-DEFAULT/20',
-    platforms: ['all', 'usv'],
+    gradient: 'from-cyan-500/20 to-blue-500/20',
+    platforms: ['all', 'usv', 'cusv'],
   },
   {
     title: 'Navigation & State Estimation',
     icon: Navigation,
-    detail: 'Sensor fusion with EKF-based state estimation integrating GNSS, IMU, and environmental sensors for real-time positioning and drift compensation.',
-    stats: { label: 'Accuracy', value: '<1m' },
+    detail: 'EKF-based sensor fusion integrating GNSS, IMU and 3D LiDAR for precise positioning and drift compensation in dynamic sea states.',
+    stats: { label: 'Fusion', value: 'EKF' },
     size: 'large',
-    gradient: 'from-ocean-DEFAULT/20 to-cyan-DEFAULT/20',
-    platforms: ['all', 'usv'],
+    gradient: 'from-blue-500/20 to-cyan-500/20',
+    platforms: ['all', 'usv', 'cusv'],
   },
   {
-    title: 'Propulsion Control',
-    icon: Disc3,
-    detail: 'Brushless DC motors with PID-based regulation providing stabilized thrust, smooth low-speed maneuvering, and fast transient response.',
-    stats: { label: 'Control', value: 'PID' },
-    size: 'medium',
-    gradient: 'from-ocean-DEFAULT/20 to-navy-50/20',
-    platforms: ['all', 'usv'],
+    title: 'Perception Suite',
+    icon: Eye,
+    detail: '3D LiDAR and stereo camera fused for 360° obstacle detection, target tracking and real-time environment mapping.',
+    stats: { label: 'Coverage', value: '360°' },
+    size: 'large',
+    gradient: 'from-teal-500/20 to-cyan-500/20',
+    platforms: ['all', 'usv', 'cusv'],
   },
   {
-    title: 'UAV Propulsion',
-    icon: Disc3,
-    detail: 'Coming Soon - Aerial platform specifications under development.',
-    stats: { label: 'Status', value: 'Coming Soon' },
+    title: 'Open Autopilot Stack',
+    icon: Gauge,
+    detail: 'Cube Orange and the ArduPilot ecosystem — ArduCopter in the air, ArduSub below the surface — unified over MAVLink.',
+    stats: { label: 'Ecosystem', value: 'ArduPilot' },
     size: 'medium',
-    gradient: 'from-cyan-DEFAULT/20 to-blue-400/20',
+    gradient: 'from-cyan-500/20 to-teal-500/20',
+    platforms: ['all', 'cusv', 'uav', 'rov'],
+  },
+  {
+    title: 'Extended Endurance',
+    icon: Battery,
+    detail: 'Catamaran hull and high-capacity power architecture sustaining 22+ hours of continuous autonomous operation.',
+    stats: { label: 'Operation', value: '22h+' },
+    size: 'medium',
+    gradient: 'from-blue-500/20 to-teal-500/20',
+    platforms: ['cusv'],
+  },
+  {
+    title: 'Long-Range Command',
+    icon: Satellite,
+    detail: 'Satellite link plus long-range RF for beyond-line-of-sight command, control and telemetry.',
+    stats: { label: 'Range', value: 'SAT + 40km' },
+    size: 'medium',
+    gradient: 'from-cyan-500/10 to-blue-500/20',
+    platforms: ['all', 'usv', 'cusv'],
+  },
+  {
+    title: 'Dual Avionics Architecture',
+    icon: Cpu,
+    detail: 'One airframe, two configurations: an ultra-low-cost ESP32 stack, and a Gemstone companion computer running ArduCopter with ROS 2.',
+    stats: { label: 'Configs', value: '2' },
+    size: 'large',
+    gradient: 'from-cyan-500/20 to-blue-400/20',
+    platforms: ['all', 'uav'],
+  },
+  {
+    title: 'Custom RC & Telemetry',
+    icon: Radio,
+    detail: 'Custom-built RC controller with 2+ km control range; Wi-Fi/BLE or MAVLink telemetry depending on configuration.',
+    stats: { label: 'Range', value: '2+ km' },
+    size: 'medium',
+    gradient: 'from-blue-400/20 to-cyan-500/20',
     platforms: ['uav'],
   },
   {
-    title: 'ROV Thrusters',
+    title: 'Aerial Vision',
+    icon: Camera,
+    detail: 'ArduCam2 camera with AI-ready onboard processing for aerial imaging.',
+    stats: { label: 'Camera', value: 'ArduCam2' },
+    size: 'small',
+    gradient: 'from-cyan-500/15 to-transparent',
+    platforms: ['uav'],
+  },
+  {
+    title: 'Vectored Propulsion',
     icon: Disc3,
-    detail: '6-thruster vectored configuration for 6-DOF movement with precision positioning.',
+    detail: '6-thruster vectored layout delivering full 6-DOF maneuvering and precise station-keeping.',
     stats: { label: 'DOF', value: '6' },
     size: 'medium',
     gradient: 'from-yellow-500/20 to-orange-500/20',
-    platforms: ['rov'],
+    platforms: ['all', 'rov'],
   },
   {
-    title: 'Communication',
-    icon: Satellite,
-    detail: 'Encrypted SATCOM, LOS radio, and mesh networking for seamless C2.',
-    stats: { label: 'Range', value: '40+ km' },
+    title: 'Subsea Sensing',
+    icon: Waves,
+    detail: 'Integrated depth & pressure sensor with MPU6050 6-axis IMU for attitude and depth hold.',
+    stats: { label: 'IMU', value: '6-Axis' },
     size: 'medium',
-    gradient: 'from-cyan-DEFAULT/10 to-ocean-DEFAULT/20',
-    platforms: ['all', 'usv', 'uav'],
-  },
-  {
-    title: 'Acoustic Comms',
-    icon: Radio,
-    detail: 'Underwater acoustic modem for ROV-USV communication link.',
-    stats: { label: 'Range', value: '3 km' },
-    size: 'medium',
-    gradient: 'from-yellow-500/15 to-cyan-DEFAULT/15',
+    gradient: 'from-yellow-500/15 to-cyan-500/15',
     platforms: ['rov'],
   },
   {
-    title: 'Multi-Sensor Fusion',
-    icon: Eye,
-    detail: 'LiDAR, stereo cameras, IMU integration with point cloud processing for real-time perception.',
-    stats: { label: 'Coverage', value: '360°' },
-    size: 'large',
-    gradient: 'from-navy-50/20 to-ocean-DEFAULT/20',
-    platforms: ['all'],
-  },
-  {
-    title: 'Surface Sensors',
-    icon: Eye,
-    detail: '3D LiDAR and stereo camera for surface surveillance and obstacle detection.',
-    stats: { label: 'Processing', value: 'Real-time' },
-    size: 'large',
-    gradient: 'from-ocean-DEFAULT/20 to-cyan-DEFAULT/20',
-    platforms: ['usv'],
-  },
-  {
-    title: 'Aerial Sensors',
-    icon: Camera,
-    detail: 'Coming Soon - Aerial sensor suite specifications under development.',
-    stats: { label: 'Status', value: 'Coming Soon' },
-    size: 'large',
-    gradient: 'from-cyan-DEFAULT/20 to-blue-400/20',
-    platforms: ['uav'],
-  },
-  {
-    title: 'Subsea Sensors',
-    icon: Eye,
-    detail: 'Multi-beam sonar, 4K cameras, and USBL positioning system.',
-    stats: { label: 'Depth', value: '300m' },
-    size: 'large',
-    gradient: 'from-yellow-500/20 to-ocean-DEFAULT/20',
+    title: 'Tethered Data Link',
+    icon: Zap,
+    detail: '50 m RJ45 tether with low-latency Ethernet video streaming to the surface station.',
+    stats: { label: 'Tether', value: '50 m' },
+    size: 'small',
+    gradient: 'from-orange-500/15 to-yellow-500/10',
     platforms: ['rov'],
   },
   {
-    title: 'Main Computer',
-    icon: Cpu,
-    detail: 'Jetson Orin Nano Super with Ubuntu 24.04 and ROS 2 Jazzy for edge AI computing.',
-    stats: { label: 'Framework', value: 'ROS 2' },
+    title: 'Mission Endurance',
+    icon: Battery,
+    detail: '4S6P Li-Ion battery pack powering 6+ hour underwater missions.',
+    stats: { label: 'Runtime', value: '6h+' },
     size: 'small',
-    gradient: 'from-navy-50/15 to-cyan-DEFAULT/10',
-    platforms: ['all', 'usv'],
+    gradient: 'from-yellow-500/15 to-transparent',
+    platforms: ['rov'],
   },
   {
-    title: 'Computer Vision',
-    icon: Brain,
-    detail: 'OpenCV and YOLO-based object detection with real-time point cloud processing.',
-    stats: { label: 'AI', value: 'YOLO' },
-    size: 'small',
-    gradient: 'from-cyan-DEFAULT/15 to-transparent',
-    platforms: ['all', 'usv'],
-  },
-  {
-    title: 'Cyber Security',
+    title: 'Safety Systems',
     icon: Shield,
-    detail: 'MIL-STD encryption, intrusion detection, and secure boot.',
-    stats: { label: 'Standard', value: 'MIL-STD' },
+    detail: 'Remote emergency shutdown and watertight flanged O-ring sealing for fail-safe operation.',
+    stats: { label: 'Safety', value: 'E-Stop' },
     size: 'small',
-    gradient: 'from-cyan-DEFAULT/10 to-ocean-DEFAULT/15',
-    platforms: ['all', 'usv', 'uav', 'rov'],
+    gradient: 'from-cyan-500/10 to-blue-500/15',
+    platforms: ['all', 'rov'],
   },
   {
-    title: 'Motor Driver',
+    title: 'Aerodynamic Optimization',
+    icon: Rocket,
+    detail: '½ power nose cone with a 2.8 fineness ratio and clipped delta balsa fins — tuned for minimum drag across the flight speed profile.',
+    stats: { label: 'Drag Coeff.', value: '1.165' },
+    size: 'large',
+    gradient: 'from-orange-500/20 to-red-500/20',
+    platforms: ['all', 'rocket'],
+  },
+  {
+    title: 'Passive Stability',
     icon: Gauge,
-    detail: '70A ESC for high-power brushless motor control with adaptive tuning.',
-    stats: { label: 'Current', value: '70A' },
-    size: 'small',
-    gradient: 'from-ocean-DEFAULT/15 to-cyan-DEFAULT/10',
-    platforms: ['usv'],
+    detail: '2.41 caliber stability margin between center of gravity and center of pressure — straight, predictable flight.',
+    stats: { label: 'Margin', value: '2.41' },
+    size: 'medium',
+    gradient: 'from-red-500/15 to-orange-500/20',
+    platforms: ['rocket'],
   },
   {
-    title: 'Mesh Network',
-    icon: Wifi,
-    detail: 'Self-forming mesh network between all autonomous platforms.',
-    stats: { label: 'Bandwidth', value: '100 Mbps' },
+    title: 'Recovery System',
+    icon: Umbrella,
+    detail: 'Polyethylene parachute descent with a safe 6.63 m/s touchdown — fully recoverable and re-flyable.',
+    stats: { label: 'Touchdown', value: '6.63 m/s' },
+    size: 'medium',
+    gradient: 'from-orange-500/15 to-yellow-500/15',
+    platforms: ['rocket'],
+  },
+  {
+    title: 'Next: Fiber-Optic Torpedo',
+    icon: Anchor,
+    detail: 'In development — fiber-optic guided subsurface platform targeting 100+ km range and 500+ m depth.',
+    stats: { label: 'Status', value: 'In Dev' },
     size: 'small',
-    gradient: 'from-cyan-DEFAULT/10 to-ocean-DEFAULT/10',
+    gradient: 'from-teal-500/20 to-cyan-500/15',
     platforms: ['all'],
   },
 ]
@@ -171,7 +191,7 @@ export default function TechSpecsBento() {
   return (
     <section id="technology" className="relative py-24 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-dark to-navy-DEFAULT" />
+      <div className="absolute inset-0 bg-gradient-to-b from-dark to-[#0B1C3E]" />
       <div className="absolute inset-0 bg-grid-pattern opacity-20" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -183,14 +203,14 @@ export default function TechSpecsBento() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <span className="inline-block px-4 py-1 mb-4 font-heading text-sm tracking-widest text-cyan-DEFAULT border border-cyan-DEFAULT/30 rounded-full">
+          <span className="inline-block px-4 py-1 mb-4 font-heading text-sm tracking-widest text-[#00F0FF] border border-[#00F0FF]/30 rounded-full">
             TECHNOLOGY
           </span>
           <h2 className="font-heading text-4xl md:text-5xl font-bold text-white mb-4">
             Engineering <span className="text-gradient">Excellence</span>
           </h2>
-          <p className="font-body text-metallic-DEFAULT max-w-2xl mx-auto">
-            State-of-the-art systems designed for unmatched performance across air, surface, and underwater domains.
+          <p className="font-body text-slate-300 max-w-2xl mx-auto">
+            Proven, field-tested systems engineered across air, surface, and underwater domains.
           </p>
         </motion.div>
 
@@ -205,8 +225,8 @@ export default function TechSpecsBento() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 ${activeTab === tab.id
-                  ? 'bg-gradient-to-r from-cyan-DEFAULT to-ocean-DEFAULT text-navy-DEFAULT'
-                  : 'glass border border-ocean-DEFAULT/30 text-metallic-DEFAULT hover:border-cyan-DEFAULT/50'
+                  ? 'bg-gradient-to-r from-[#00F0FF] to-[#0077BE] text-[#0B1C3E]'
+                  : 'glass border border-[#0077BE]/30 text-slate-300 hover:border-[#00F0FF]/50'
                   }`}
               >
                 <Icon className="w-4 h-4" />
@@ -240,7 +260,7 @@ export default function TechSpecsBento() {
                 className={`${colSpan} group`}
               >
                 <div
-                  className={`relative h-full p-6 rounded-xl glass border border-ocean-DEFAULT/20 hover:border-cyan-DEFAULT/50 transition-all duration-500 overflow-hidden cursor-pointer`}
+                  className={`relative h-full p-6 rounded-xl glass border border-[#0077BE]/20 hover:border-[#00F0FF]/50 transition-all duration-500 overflow-hidden cursor-pointer`}
                 >
                   {/* Gradient background */}
                   <div
@@ -252,7 +272,7 @@ export default function TechSpecsBento() {
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                      className="absolute -top-10 -right-10 w-20 h-20 border border-cyan-DEFAULT/20 rounded-full"
+                      className="absolute -top-10 -right-10 w-20 h-20 border border-[#00F0FF]/20 rounded-full"
                     />
                   </div>
 
@@ -260,27 +280,27 @@ export default function TechSpecsBento() {
                     {/* Icon */}
                     <motion.div
                       whileHover={{ scale: 1.1, rotate: 5 }}
-                      className="inline-flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-gradient-to-br from-cyan-DEFAULT/20 to-ocean-DEFAULT/20 border border-cyan-DEFAULT/30"
+                      className="inline-flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-gradient-to-br from-[#00F0FF]/20 to-[#0077BE]/20 border border-[#00F0FF]/30"
                     >
-                      <Icon className="w-6 h-6 text-cyan-DEFAULT" />
+                      <Icon className="w-6 h-6 text-[#00F0FF]" />
                     </motion.div>
 
                     {/* Title */}
-                    <h3 className="font-heading text-xl font-semibold text-white mb-2 group-hover:text-cyan-DEFAULT transition-colors">
+                    <h3 className="font-heading text-xl font-semibold text-white mb-2 group-hover:text-[#00F0FF] transition-colors">
                       {spec.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="font-body text-sm text-metallic-DEFAULT mb-4 leading-relaxed">
+                    <p className="font-body text-sm text-slate-300 mb-4 leading-relaxed">
                       {spec.detail}
                     </p>
 
                     {/* Stats */}
-                    <div className="flex items-center justify-between pt-4 border-t border-ocean-DEFAULT/20">
-                      <span className="font-body text-xs text-metallic-dark uppercase tracking-wider">
+                    <div className="flex items-center justify-between pt-4 border-t border-[#0077BE]/20">
+                      <span className="font-body text-xs text-slate-400 uppercase tracking-wider">
                         {spec.stats.label}
                       </span>
-                      <span className="font-heading text-lg font-bold text-cyan-DEFAULT">
+                      <span className="font-heading text-lg font-bold text-[#00F0FF]">
                         {spec.stats.value}
                       </span>
                     </div>
@@ -288,30 +308,13 @@ export default function TechSpecsBento() {
 
                   {/* Hover glow effect */}
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-1/2 bg-cyan-DEFAULT/10 blur-3xl" />
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-1/2 bg-[#00F0FF]/10 blur-3xl" />
                   </div>
                 </div>
               </motion.div>
             )
           })}
         </div>
-
-        {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="text-center mt-12"
-        >
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 font-heading text-sm font-semibold tracking-wider text-cyan-DEFAULT border border-cyan-DEFAULT/50 rounded-sm hover:bg-cyan-DEFAULT/10 transition-colors"
-          >
-            Download Full Technical Specifications
-          </motion.button>
-        </motion.div>
       </div>
     </section>
   )

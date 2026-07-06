@@ -3,8 +3,8 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import {
-  Waves, Plane, Anchor, ChevronRight, Gauge, Battery, Radio,
-  Eye, Ruler, Weight, Timer
+  Waves, Plane, Anchor, Rocket, ChevronRight, Gauge, Battery, Radio,
+  Eye, Ruler, Weight, Timer, CircleDollarSign, Gamepad2, Umbrella, Cpu
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 
@@ -51,12 +51,136 @@ const fleet = [
     ],
   },
   {
+    id: 'rov' as const,
+    name: 'KAYRA ROV',
+    subtitle: 'Inspection Class ROV',
+    turkishName: 'ROV - Uzaktan Kumandalı Sualtı Aracı',
+    icon: Anchor,
+    description: 'Inspection Class Remotely Operated Vehicle featuring Cast Polyamide Chassis with Acrylic Watertight Enclosure. Powered by Raspberry Pi 5 or Gemstone running ROS 2 Humble Hawksbill on Ubuntu 22.04 LTS.',
+    color: 'from-yellow-500 to-orange-500',
+    bgColor: 'from-yellow-500/20 to-orange-500/10',
+    specs: [
+      { icon: Ruler, label: 'Dimensions', value: '440x300x220mm' },
+      { icon: Gauge, label: 'Thrusters', value: '6-Vector' },
+      { icon: Timer, label: 'Computer', value: 'RPi 5 / Gemstone' },
+      { icon: Weight, label: 'Battery / Mission', value: '4S6P · 6h+' },
+      { icon: Battery, label: 'Data Link', value: '50m RJ45' },
+      { icon: Eye, label: 'Gemstone ArduSub', value: 'Coming Soon' },
+    ],
+    capabilities: [
+      '6-Thruster Vector Configuration',
+      'ROS 2 Humble Hawksbill',
+      'MPU6050 IMU (6-Axis)',
+      'Integrated Depth & Pressure Sensor',
+      'Remote Emergency Shutdown',
+      '6+ Hour Mission Endurance',
+      'Gemstone-Based ArduSub (Coming Soon)',
+      'Low-Latency Ethernet Streaming',
+      'Custom User Interface',
+      'Flanged O-Ring Sealing',
+    ],
+  },
+  {
+    id: 'cusv' as const,
+    name: 'KAYRA C-USV',
+    subtitle: 'Catamaran Surface Vehicle',
+    turkishName: 'C-USV - Katamaran İnsansız Deniz Aracı',
+    icon: Waves,
+    description: 'Autonomous catamaran surface vessel powered by Jetson Orin Nano Super running ROS 2 Humble. Features 3D LiDAR, stereo camera, Cube Orange autopilot, and AI-powered computer vision with OpenCV & YOLO.',
+    color: 'from-ocean-DEFAULT to-cyan-DEFAULT',
+    bgColor: 'from-ocean-DEFAULT/20 to-cyan-DEFAULT/10',
+    specs: [
+      { icon: Ruler, label: 'Dimensions', value: '120x85x40cm' },
+      { icon: Gauge, label: 'Max Speed', value: '10 kts' },
+      { icon: Timer, label: 'Operation', value: '22+ hours' },
+      { icon: Weight, label: 'Payload', value: '50 kg' },
+      { icon: Battery, label: 'Computer', value: 'Jetson Orin' },
+      { icon: Radio, label: 'Range', value: 'SAT + 40km' },
+    ],
+    capabilities: [
+      'Jetson Orin Nano Super',
+      'ROS 2 Humble',
+      'Cube Orange Autopilot',
+      '3D LiDAR & Stereo Camera',
+      'OpenCV + YOLO AI Vision',
+      'Point Cloud Processing',
+    ],
+    stages: [
+      {
+        name: 'Cube Orange',
+        specs: [
+          { icon: Ruler, label: 'Dimensions', value: '120x85x40cm' },
+          { icon: Gauge, label: 'Max Speed', value: '10 kts' },
+          { icon: Timer, label: 'Operation', value: '22+ hours' },
+          { icon: Weight, label: 'Payload', value: '50 kg' },
+          { icon: Battery, label: 'Computer', value: 'Jetson Orin' },
+          { icon: Radio, label: 'Range', value: 'SAT + 40km' },
+        ],
+        capabilities: [
+          'Jetson Orin Nano Super',
+          'ROS 2 Humble',
+          'Cube Orange Autopilot',
+          '3D LiDAR & Stereo Camera',
+          'OpenCV + YOLO AI Vision',
+          'Point Cloud Processing',
+        ],
+      },
+      {
+        name: 'Gemstone',
+        specs: [
+          { icon: Timer, label: 'Computer', value: 'Coming Soon' },
+          { icon: Gauge, label: 'Autopilot', value: 'Coming Soon' },
+          { icon: Eye, label: 'Sensors', value: 'Coming Soon' },
+          { icon: Battery, label: 'Operation', value: 'Coming Soon' },
+          { icon: Radio, label: 'Telemetry', value: 'Coming Soon' },
+          { icon: Cpu, label: 'Framework', value: 'Coming Soon' },
+        ],
+        capabilities: [
+          'Coming Soon',
+          'Coming Soon',
+          'Coming Soon',
+          'Coming Soon',
+          'Coming Soon',
+          'Coming Soon',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'rocket' as const,
+    name: 'KAYRA ROCKET',
+    subtitle: 'Recoverable Model Rocket',
+    turkishName: 'Roket - Kurtarılabilir Model Roket',
+    icon: Rocket,
+    description: 'Low-cost, fully recoverable model rocket developed for research and competition missions. ½ power nose cone and clipped delta fins deliver minimum drag across its flight speed profile, with a 2.41 stability margin ensuring straight, stable flight.',
+    color: 'from-orange-500 to-red-500',
+    bgColor: 'from-orange-500/20 to-red-500/10',
+    specs: [
+      { icon: CircleDollarSign, label: 'Cost', value: 'Low-Cost' },
+      { icon: Ruler, label: 'Dimensions', value: '32.3×2.5 cm' },
+      { icon: Rocket, label: 'Apogee', value: '500+ m' },
+      { icon: Gauge, label: 'Max Speed', value: '46.1 m/s' },
+      { icon: Weight, label: 'Liftoff Mass', value: '68.9 g' },
+      { icon: Umbrella, label: 'Recovery', value: 'Parachute' },
+    ],
+    capabilities: [
+      'Low-Cost Educational Design',
+      'Fully Recoverable via Parachute',
+      '½ Power Nose Cone — 2.8 Fineness Ratio',
+      'Clipped Delta Balsa Fins',
+      'Stability Margin 2.41 — Stable Flight',
+      'ABS Airframe & Nose Cone',
+      '19 G Max Acceleration Tolerance',
+      'Safe Descent — 6.63 m/s Touchdown',
+    ],
+  },
+  {
     id: 'uav' as const,
     name: 'KAYRA UAV',
     subtitle: 'Unmanned Aerial Vehicle',
     turkishName: 'İHA - İnsansız Hava Aracı',
     icon: Plane,
-    description: 'Fixed-wing tactical UAV platform for extended aerial surveillance, reconnaissance, and real-time intelligence gathering. Currently in development.',
+    description: 'Tactical UAV platform for extended aerial surveillance, reconnaissance, and real-time intelligence gathering. One airframe, two avionics configurations — select a stage below.',
     color: 'from-cyan-DEFAULT to-blue-400',
     bgColor: 'from-cyan-DEFAULT/20 to-blue-400/10',
     specs: [
@@ -75,64 +199,85 @@ const fleet = [
       'Coming Soon',
       'Coming Soon',
     ],
+    stages: [
+      {
+        name: 'ESP32 Based',
+        specs: [
+          { icon: CircleDollarSign, label: 'Cost', value: 'Ultra-Low' },
+          { icon: Timer, label: 'Flight Ctrl', value: 'ESP32' },
+          { icon: Gamepad2, label: 'Control', value: 'Custom RC' },
+          { icon: Radio, label: 'Range', value: '2+ km' },
+          { icon: Gauge, label: 'Telemetry', value: 'Wi-Fi / BLE' },
+          { icon: Eye, label: 'GNSS', value: 'Coming Soon' },
+        ],
+        capabilities: [
+          'Ultra-Low-Cost Platform',
+          'ESP32-Based Flight Controller',
+          'Custom-Built RC Controller',
+          '2+ km Control Range',
+          'Wi-Fi & Bluetooth Telemetry',
+          'Manual & Stabilized Flight Modes',
+        ],
+      },
+      {
+        name: 'Gemstone UAV',
+        specs: [
+          { icon: Timer, label: 'Computer', value: 'Gemstone' },
+          { icon: Gauge, label: 'Software', value: 'ArduCopter' },
+          { icon: Eye, label: 'Camera', value: 'ArduCam2' },
+          { icon: Battery, label: 'Flight Time', value: '1+ hour' },
+          { icon: Radio, label: 'Telemetry', value: 'MAVLink' },
+          { icon: Cpu, label: 'Framework', value: 'ROS 2' },
+        ],
+        capabilities: [
+          'Gemstone Companion Computer',
+          'ArduCopter Flight Software',
+          'ArduCam2 Vision Camera',
+          '1+ Hour Flight Endurance',
+          'MAVLink Telemetry Link',
+          'Linux + ROS 2 Autonomy Stack',
+          'AI-Ready Onboard Processing',
+          'Autonomous Mission Execution',
+        ],
+      },
+    ],
   },
   {
-    id: 'rov' as const,
-    name: 'KAYRA ROV',
-    subtitle: 'Inspection Class ROV',
-    turkishName: 'ROV - Uzaktan Kumandalı Sualtı Aracı',
-    icon: Anchor,
-    description: 'Inspection Class Remotely Operated Vehicle featuring Cast Polyamide Chassis with Acrylic Watertight Enclosure. Powered by Raspberry Pi 5 running ROS 2 Humble Hawksbill on Ubuntu 22.04 LTS.',
-    color: 'from-yellow-500 to-orange-500',
-    bgColor: 'from-yellow-500/20 to-orange-500/10',
+    id: 'torpedo' as const,
+    name: 'KAYRA TORPEDO',
+    subtitle: 'Fiber Optic Torpedo',
+    turkishName: 'Fiber Optik Torpido',
+    icon: Rocket,
+    description: 'Next-generation fiber-optic guided torpedo platform for high-speed subsurface missions. Currently in development — figures below are design targets.',
+    color: 'from-teal-400 to-cyan-500',
+    bgColor: 'from-teal-500/20 to-cyan-500/10',
     specs: [
-      { icon: Ruler, label: 'Dimensions', value: '440x300x220mm' },
-      { icon: Gauge, label: 'Thrusters', value: '6-Vector' },
-      { icon: Timer, label: 'Computer', value: 'RPi 5 8GB' },
-      { icon: Weight, label: 'Battery', value: '4S 6P Li-Ion' },
-      { icon: Battery, label: 'Data Link', value: '30m RJ45' },
-      { icon: Eye, label: 'Camera', value: 'Fisheye Wide' },
+      { icon: Ruler, label: 'Target Dimensions', value: '3.5m × Ø15cm' },
+      { icon: Weight, label: 'Target Hull', value: 'Aluminum Tube' },
+      { icon: Anchor, label: 'Target Depth', value: '500+ m' },
+      { icon: Radio, label: 'Target Range', value: '100+ km' },
+      { icon: Battery, label: 'Target Power', value: 'Full LiFePO4' },
+      { icon: Cpu, label: 'Target Computer', value: 'Gemstone' },
     ],
     capabilities: [
-      '6-Thruster Vector Configuration',
-      'ROS 2 Humble Hawksbill',
-      'MPU6050 IMU (6-Axis)',
-      'Low-Latency Ethernet Streaming',
-      'Custom User Interface',
-      'Flanged O-Ring Sealing',
-    ],
-  },
-  {
-    id: 'cusv' as const,
-    name: 'KAYRA C-USV',
-    subtitle: 'Catamaran Surface Vehicle',
-    turkishName: 'C-USV - Katamaran İnsansız Deniz Aracı',
-    icon: Waves,
-    description: 'Autonomous catamaran surface vessel powered by Jetson Orin Nano Super running ROS 2 Jazzy on Ubuntu 24.04. Features 3D LiDAR, stereo camera, and AI-powered computer vision with OpenCV & YOLO.',
-    color: 'from-ocean-DEFAULT to-cyan-DEFAULT',
-    bgColor: 'from-ocean-DEFAULT/20 to-cyan-DEFAULT/10',
-    specs: [
-      { icon: Ruler, label: 'Dimensions', value: '80x24x23cm' },
-      { icon: Gauge, label: 'Speed', value: '6 kts' },
-      { icon: Timer, label: 'Operation', value: '5+ hours' },
-      { icon: Weight, label: 'Payload', value: '50 kg' },
-      { icon: Battery, label: 'Computer', value: 'Jetson Orin' },
-      { icon: Radio, label: 'Range', value: '40+ km' },
-    ],
-    capabilities: [
-      'Jetson Orin Nano Super',
-      'ROS 2 Jazzy + Ubuntu 24.04',
-      '3D LiDAR & Stereo Camera',
-      'OpenCV + YOLO AI Vision',
-      'Dual-Motor Propulsion',
-      'Point Cloud Processing',
+      'Fiber-Optic Guidance — 100+ km Range',
+      'Aluminum Pressure Hull (Ø15 cm)',
+      '500+ m Operating Depth',
+      'Full LiFePO4 Power System',
+      'Gemstone Powered Autonomy',
+      'High-Speed Subsurface Mission Profile',
     ],
   },
 ]
 
 export default function FleetShowcase() {
   const [activeVehicle, setActiveVehicle] = useState(0)
+  const [activeStage, setActiveStage] = useState(0)
   const vehicle = fleet[activeVehicle]
+  const stages = 'stages' in vehicle ? vehicle.stages : null
+  const stage = stages ? stages[activeStage] ?? stages[0] : null
+  const activeSpecs = stage ? stage.specs : vehicle.specs
+  const activeCapabilities = stage ? stage.capabilities : vehicle.capabilities
   const isMobile = useIsMobile()
 
   return (
@@ -168,7 +313,7 @@ export default function FleetShowcase() {
             return (
               <motion.button
                 key={v.id}
-                onClick={() => setActiveVehicle(index)}
+                onClick={() => { setActiveVehicle(index); setActiveStage(0) }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className={`flex items-center gap-2 sm:gap-3 px-3 sm:px-6 py-2 sm:py-4 rounded-xl transition-all duration-300 ${activeVehicle === index
@@ -211,14 +356,14 @@ export default function FleetShowcase() {
                     </div>
                   </div>
 
-                  {/* UAV Special "Coming Soon" Overlay */}
-                  {vehicle.id === 'uav' && (
+                  {/* Torpedo "Coming Soon" overlay — representative visual behind */}
+                  {vehicle.id === 'torpedo' && (
                     <div className="absolute inset-0 backdrop-blur-md bg-navy-950/60 flex items-center justify-center z-20">
                       <div className="text-center">
-                        <span className="inline-block px-6 sm:px-8 py-3 sm:py-4 font-heading text-lg sm:text-2xl font-bold tracking-widest text-white bg-gradient-to-r from-cyan-500/30 to-ocean-500/30 border-cyan-DEFAULT/50 shadow-[0_0_40px_rgba(0,240,255,0.3)] border-2 rounded-lg backdrop-blur-sm">
+                        <span className="inline-block px-6 sm:px-8 py-3 sm:py-4 font-heading text-lg sm:text-2xl font-bold tracking-widest text-white bg-gradient-to-r from-teal-500/30 to-cyan-500/30 border-cyan-400/50 shadow-[0_0_40px_rgba(0,240,255,0.3)] border-2 rounded-lg backdrop-blur-sm">
                           COMING SOON
                         </span>
-                        <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-metallic-DEFAULT">Geliştirme aşamasında</p>
+                        <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-slate-400">Geliştirme aşamasında</p>
                       </div>
                     </div>
                   )}
@@ -229,17 +374,45 @@ export default function FleetShowcase() {
             {/* Right - Details */}
             <div className="space-y-8">
               <div>
-                <h3 className="font-heading text-xl sm:text-3xl font-bold text-white mb-2 sm:mb-4">
-                  {vehicle.name}
-                </h3>
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-2 sm:mb-4">
+                  <h3 className="font-heading text-xl sm:text-3xl font-bold text-white">
+                    {vehicle.name}
+                  </h3>
+
+                  {/* Stage selector - same airframe, different avionics */}
+                  {stages && (
+                    <div className="inline-flex p-1 gap-1 glass rounded-xl border border-ocean-DEFAULT/30">
+                      {stages.map((s, index) => (
+                        <motion.button
+                          key={s.name}
+                          onClick={() => setActiveStage(index)}
+                          whileHover={{ scale: 1.03 }}
+                          whileTap={{ scale: 0.97 }}
+                          className={`px-3 sm:px-4 py-1.5 rounded-lg font-heading text-xs sm:text-sm font-semibold tracking-wider transition-all duration-300 ${activeStage === index
+                            ? 'bg-gradient-to-r from-[#00F0FF] to-[#0077BE] text-[#0B1C3E] shadow-lg shadow-[#00F0FF]/20'
+                            : 'text-slate-400 hover:text-white'
+                            }`}
+                        >
+                          {s.name}
+                        </motion.button>
+                      ))}
+                    </div>
+                  )}
+                </div>
                 <p className="font-body text-metallic-DEFAULT leading-relaxed">
                   {vehicle.description}
                 </p>
               </div>
 
               {/* Specs grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4">
-                {vehicle.specs.map((spec) => {
+              <div>
+                {vehicle.id === 'torpedo' && (
+                  <h4 className="font-heading text-lg sm:text-2xl font-bold text-white tracking-wide mb-3 sm:mb-4">
+                    Targets
+                  </h4>
+                )}
+                <div key={`specs-${vehicle.id}-${activeStage}`} className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4">
+                {activeSpecs.map((spec) => {
                   const Icon = spec.icon
                   return (
                     <div
@@ -256,6 +429,7 @@ export default function FleetShowcase() {
                     </div>
                   )
                 })}
+                </div>
               </div>
 
               {/* Capabilities */}
@@ -264,9 +438,9 @@ export default function FleetShowcase() {
                   Key Capabilities
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                  {vehicle.capabilities.map((cap, index) => (
+                  {activeCapabilities.map((cap, index) => (
                     <motion.div
-                      key={cap}
+                      key={`${vehicle.id}-${activeStage}-${index}-${cap}`}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}

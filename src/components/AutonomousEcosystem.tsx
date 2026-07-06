@@ -2,103 +2,75 @@
 
 import { motion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
-import {
-  Waves, Plane, Anchor, Satellite, Cloud, Server,
-  Radio, Eye, Navigation, Brain, Shield, Zap, Hexagon
-} from 'lucide-react'
+import { Waves, Plane, Anchor, Satellite, Server, Rocket } from 'lucide-react'
 
 const ecosystemNodes = [
   {
     id: 'satellite',
     icon: Satellite,
-    label: 'SATCOM Link',
-    position: { x: '50%', y: '10%' },
+    label: 'SATCOM',
+    position: { x: '50%', y: '8%' },
     color: 'text-purple-400',
-    description: 'Global satellite communication for beyond line-of-sight operations',
-  },
-  {
-    id: 'cloud',
-    icon: Cloud,
-    label: 'Cloud C2',
-    position: { x: '85%', y: '30%' },
-    color: 'text-blue-400',
-    description: 'Secure cloud-based command and control infrastructure',
+    description: 'Satellite uplink for beyond-line-of-sight C-USV missions',
   },
   {
     id: 'uav',
     icon: Plane,
-    label: 'UAV Swarm',
-    position: { x: '20%', y: '30%' },
+    label: 'UAV',
+    position: { x: '22%', y: '28%' },
     color: 'text-cyan-400',
-    description: 'Aerial surveillance and reconnaissance platform',
+    description: 'Aerial reconnaissance — MAVLink telemetry, 2+ km custom RC link',
+  },
+  {
+    id: 'cusv',
+    icon: Waves,
+    label: 'C-USV',
+    position: { x: '62%', y: '42%' },
+    color: 'text-blue-400',
+    description: 'Catamaran command node — 22h+ endurance, SAT + 40 km reach',
   },
   {
     id: 'usv',
     icon: Waves,
-    label: 'USV Fleet',
-    position: { x: '50%', y: '50%' },
+    label: 'USV',
+    position: { x: '38%', y: '48%' },
     color: 'text-cyan-400',
-    description: 'Surface vessel command node and mobile operations center',
+    description: 'Autonomous surface vessel — Jetson Orin + ROS 2 autonomy',
   },
   {
     id: 'rov',
     icon: Anchor,
-    label: 'ROV System',
-    position: { x: '50%', y: '80%' },
+    label: 'ROV',
+    position: { x: '40%', y: '78%' },
     color: 'text-yellow-400',
-    description: 'Underwater inspection and intervention capability',
+    description: 'Subsea inspection — 50 m tethered low-latency Ethernet link',
+  },
+  {
+    id: 'torpedo',
+    icon: Rocket,
+    label: 'TORPEDO · DEV',
+    position: { x: '68%', y: '76%' },
+    color: 'text-teal-400',
+    description: 'Fiber-optic guided subsurface platform — in development',
   },
   {
     id: 'gcs',
     icon: Server,
     label: 'Ground Control',
-    position: { x: '15%', y: '70%' },
+    position: { x: '15%', y: '68%' },
     color: 'text-green-400',
-    description: 'Shore-based mission planning and monitoring station',
+    description: 'Shore station — mission planning, live monitoring and emergency stop',
   },
 ]
 
 const connections = [
-  { from: 'satellite', to: 'usv' },
-  { from: 'satellite', to: 'cloud' },
-  { from: 'cloud', to: 'gcs' },
-  { from: 'uav', to: 'usv' },
-  { from: 'usv', to: 'rov' },
+  { from: 'satellite', to: 'cusv' },
   { from: 'gcs', to: 'usv' },
-  { from: 'uav', to: 'satellite' },
-]
-
-const capabilities = [
-  {
-    icon: Brain,
-    title: 'AI Decision Core',
-    description: 'Distributed neural networks for autonomous mission execution.',
-  },
-  {
-    icon: Radio,
-    title: 'Multi-Link Mesh',
-    description: 'Self-healing encrypted communication across all domains.',
-  },
-  {
-    icon: Eye,
-    title: 'Omni-Fusion',
-    description: '360° situational awareness combining sonar, radar, and lidar.',
-  },
-  {
-    icon: Navigation,
-    title: 'Swarm Nav',
-    description: 'Synchronized formation control with collision avoidance.',
-  },
-  {
-    icon: Shield,
-    title: 'Cyber Defense',
-    description: 'Quantum-resistant encryption and active intrusion countermeasures.',
-  },
-  {
-    icon: Zap,
-    title: 'Hyper-Response',
-    description: 'Microsecond latency for critical tactical maneuvers.',
-  },
+  { from: 'gcs', to: 'cusv' },
+  { from: 'gcs', to: 'uav' },
+  { from: 'usv', to: 'cusv' },
+  { from: 'usv', to: 'rov' },
+  { from: 'cusv', to: 'torpedo' },
 ]
 
 export default function AutonomousEcosystem() {
@@ -124,12 +96,12 @@ export default function AutonomousEcosystem() {
             THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">HIVE MIND</span>
           </h2>
           <p className="font-body text-base sm:text-xl text-slate-400 max-w-2xl mx-auto px-4">
-            A unified battle-space network where every node thinks, communicates, and acts as one.
+            One integrated fleet — air, surface and subsurface platforms sharing a single command network.
           </p>
         </motion.div>
 
         {/* 3D Holographic Map Container - Hidden on mobile, simplified */}
-        <div ref={ref} className="relative h-[300px] sm:h-[600px] mb-16 sm:mb-32 perspective-1000 hidden sm:block">
+        <div ref={ref} className="relative h-[300px] sm:h-[600px] perspective-1000 hidden sm:block">
           {/* Tilted Plane */}
           <motion.div
             initial={{ rotateX: 45, scale: 0.8, opacity: 0 }}
@@ -185,10 +157,10 @@ export default function AutonomousEcosystem() {
                         opacity: [0, 1, 1, 0]
                       }}
                       transition={{
-                        duration: 1.5 + Math.random(),
+                        duration: 1.5 + (index % 3) * 0.4,
                         repeat: Infinity,
                         ease: "linear",
-                        delay: Math.random() * 2
+                        delay: (index % 4) * 0.5
                       }}
                     />
 
@@ -271,51 +243,6 @@ export default function AutonomousEcosystem() {
               )
             })}
           </motion.div>
-        </div>
-
-        {/* Hexagon Capabilities Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
-          {capabilities.map((cap, index) => {
-            const Icon = cap.icon
-            return (
-              <motion.div
-                key={cap.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="group relative"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                <div className="relative h-full bg-navy-900/50 border border-white/5 hover:border-cyan-500/50 p-4 sm:p-8 rounded-xl backdrop-blur-sm transition-all duration-300 group-hover:-translate-y-2">
-                  {/* Hexagon Icon Background */}
-                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <Hexagon className="w-24 h-24 text-cyan-500" />
-                  </div>
-
-                  <div className="relative z-10">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 mb-4 sm:mb-6 rounded-lg bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <Icon className="w-6 h-6 text-cyan-400" />
-                    </div>
-
-                    <h3 className="font-heading text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3 group-hover:text-cyan-300 transition-colors">
-                      {cap.title}
-                    </h3>
-                    <p className="font-body text-slate-400 group-hover:text-slate-300 leading-relaxed">
-                      {cap.description}
-                    </p>
-                  </div>
-
-                  {/* Tech Corners */}
-                  <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-500/50" />
-                  <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-cyan-500/50" />
-                  <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-cyan-500/50" />
-                  <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-500/50" />
-                </div>
-              </motion.div>
-            )
-          })}
         </div>
       </div>
     </section>

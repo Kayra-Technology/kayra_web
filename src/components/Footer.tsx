@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Linkedin, Twitter, Instagram, Mail, MapPin, Phone, ArrowRight } from 'lucide-react'
+import { Mail, MapPin, ArrowRight } from 'lucide-react'
 import { useState } from 'react'
 
 // Custom North Star icon - matching KAYRA background logo style
@@ -117,35 +117,11 @@ export default function Footer() {
               </a>
               <div className="flex items-center gap-3 text-sm text-metallic-DEFAULT">
                 <MapPin className="w-4 h-4" />
-                Istanbul, ITU Teknopark
+                İTÜ Özdemir Bayraktar Tasarım ve Prototipleme Merkezi
               </div>
             </div>
           </div>
 
-          {/* Social links */}
-          <div className="md:text-right">
-            <h4 className="font-heading text-sm font-semibold text-white uppercase tracking-wider mb-4">
-              Connect
-            </h4>
-            <div className="flex gap-3 md:justify-end">
-              {[
-                { icon: Linkedin, href: '#', label: 'LinkedIn' },
-                { icon: Twitter, href: '#', label: 'X (Twitter)' },
-                { icon: Instagram, href: '#', label: 'Instagram' },
-              ].map((social) => (
-                <motion.a
-                  key={social.label}
-                  href={social.href}
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="w-10 h-10 rounded-lg glass border border-ocean-DEFAULT/30 flex items-center justify-center text-metallic-DEFAULT hover:text-cyan-DEFAULT hover:border-cyan-DEFAULT/50 transition-colors"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-5 h-5" />
-                </motion.a>
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* Bottom bar */}

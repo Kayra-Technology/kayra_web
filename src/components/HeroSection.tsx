@@ -12,6 +12,8 @@ const platforms = [
 ]
 
 // Floating particles for magical effect
+// Deterministic positions — Math.random here causes an SSR hydration
+// mismatch that mis-binds click handlers across the whole page.
 function FloatingParticles() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -20,8 +22,8 @@ function FloatingParticles() {
           key={i}
           className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
+            left: `${(i * 37 + 13) % 100}%`,
+            top: `${(i * 53 + 7) % 100}%`,
           }}
           animate={{
             y: [0, -100, 0],
@@ -29,9 +31,9 @@ function FloatingParticles() {
             scale: [0, 1.5, 0],
           }}
           transition={{
-            duration: 4 + Math.random() * 4,
+            duration: 4 + (i % 9) * 0.5,
             repeat: Infinity,
-            delay: Math.random() * 4,
+            delay: (i % 8) * 0.5,
             ease: 'easeInOut',
           }}
         />
