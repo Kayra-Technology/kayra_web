@@ -42,86 +42,6 @@ function FloatingParticles() {
   )
 }
 
-// Animated wave effect
-function OceanWaves() {
-  return (
-    <div className="absolute bottom-0 left-0 right-0 h-64 overflow-hidden">
-      <svg className="absolute bottom-0 w-full" viewBox="0 0 1440 320" preserveAspectRatio="none">
-        <motion.path
-          fill="url(#waveGradient)"
-          fillOpacity="0.3"
-          animate={{
-            d: [
-              "M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,138.7C672,128,768,160,864,181.3C960,203,1056,213,1152,197.3C1248,181,1344,139,1392,117.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z",
-              "M0,192L48,197.3C96,203,192,213,288,192C384,171,480,117,576,122.7C672,128,768,192,864,213.3C960,235,1056,213,1152,186.7C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z",
-              "M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,138.7C672,128,768,160,864,181.3C960,203,1056,213,1152,197.3C1248,181,1344,139,1392,117.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z",
-            ],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-        <defs>
-          <linearGradient id="waveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#00F0FF" stopOpacity="0.2" />
-            <stop offset="100%" stopColor="#0077BE" stopOpacity="0.4" />
-          </linearGradient>
-        </defs>
-      </svg>
-      <svg className="absolute bottom-0 w-full" viewBox="0 0 1440 320" preserveAspectRatio="none">
-        <motion.path
-          fill="url(#waveGradient2)"
-          fillOpacity="0.2"
-          animate={{
-            d: [
-              "M0,224L48,213.3C96,203,192,181,288,186.7C384,192,480,224,576,234.7C672,245,768,235,864,213.3C960,192,1056,160,1152,165.3C1248,171,1344,213,1392,234.7L1440,256L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z",
-              "M0,256L48,240C96,224,192,192,288,186.7C384,181,480,203,576,218.7C672,235,768,245,864,229.3C960,213,1056,171,1152,160C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z",
-              "M0,224L48,213.3C96,203,192,181,288,186.7C384,192,480,224,576,234.7C672,245,768,235,864,213.3C960,192,1056,160,1152,165.3C1248,171,1344,213,1392,234.7L1440,256L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z",
-            ],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            delay: 0.5,
-          }}
-        />
-        <defs>
-          <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#0077BE" stopOpacity="0.3" />
-            <stop offset="100%" stopColor="#050A14" stopOpacity="0.8" />
-          </linearGradient>
-        </defs>
-      </svg>
-    </div>
-  )
-}
-
-// Moon with glow
-function Moon() {
-  return (
-    <motion.div
-      className="absolute top-10 right-4 sm:top-20 sm:right-20 w-16 h-16 sm:w-32 sm:h-32"
-      initial={{ opacity: 0, y: -50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 2, delay: 0.5 }}
-    >
-      <div className="relative w-full h-full">
-        {/* Outer glow */}
-        <div className="absolute inset-0 bg-gradient-radial from-cyan-300/20 via-cyan-500/5 to-transparent rounded-full blur-3xl scale-[3]" />
-        {/* Moon body */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-slate-300 rounded-full shadow-[0_0_60px_rgba(255,255,255,0.3)]" />
-        {/* Craters */}
-        <div className="absolute top-4 left-6 w-4 h-4 bg-slate-300/50 rounded-full" />
-        <div className="absolute top-12 right-8 w-6 h-6 bg-slate-300/40 rounded-full" />
-        <div className="absolute bottom-8 left-10 w-3 h-3 bg-slate-300/30 rounded-full" />
-      </div>
-    </motion.div>
-  )
-}
-
 // Liquid Glass Card
 function LiquidGlassCard({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
@@ -162,8 +82,20 @@ export default function HeroSection() {
       ref={containerRef}
       className="relative min-h-screen flex items-center overflow-hidden"
     >
-      {/* Background Image - Using Next.js Image for better quality */}
-      <div className="absolute inset-0 z-0">
+      {/* Background photo — confined to the hero viewport only, so the
+          logo scrolls away with it instead of following down the page.
+          Its own bottom edge fades to transparent (mask, not a solid
+          color) so what shows through is body's lacquer-navy-full
+          gradient continuing underneath — the same gradient, still
+          mid-sweep, so the handoff always matches exactly instead of
+          fading to a fixed color that the tile below may not agree with. */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          maskImage: 'linear-gradient(to bottom, black 0%, black 80%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 80%, transparent 100%)',
+        }}
+      >
         <Image
           src="/images/hero-bg.png"
           alt="KAYRA Technology Background"
@@ -175,24 +107,8 @@ export default function HeroSection() {
         />
       </div>
 
-      {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-navy-950/90 via-navy-950/70 to-navy-950/50 z-[1]" />
-
-      {/* Animated gradient overlay */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-navy-950/30 z-[2]"
-        animate={{ opacity: [0.7, 0.9, 0.7] }}
-        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-      />
-
-      {/* Moon */}
-      <Moon />
-
       {/* Floating particles */}
       <FloatingParticles />
-
-      {/* Ocean waves */}
-      <OceanWaves />
 
       {/* Main content */}
       <motion.div
@@ -207,33 +123,6 @@ export default function HeroSection() {
           {/* Right content - 3D Visualization */}
 
         </div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="flex flex-col items-center gap-2"
-          >
-            <span className="font-body text-xs text-slate-400 tracking-widest uppercase">
-              Scroll to Explore
-            </span>
-            <motion.div
-              className="w-6 h-10 rounded-full border-2 border-cyan-400/50 flex items-start justify-center p-2"
-            >
-              <motion.div
-                className="w-1.5 h-1.5 bg-cyan-400 rounded-full"
-                animate={{ y: [0, 12, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              />
-            </motion.div>
-          </motion.div>
-        </motion.div>
       </motion.div>
     </section>
   )

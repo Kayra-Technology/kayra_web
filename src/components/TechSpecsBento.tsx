@@ -191,7 +191,6 @@ export default function TechSpecsBento() {
   return (
     <section id="technology" className="relative py-24 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-dark to-[#0B1C3E]" />
       <div className="absolute inset-0 bg-grid-pattern opacity-20" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

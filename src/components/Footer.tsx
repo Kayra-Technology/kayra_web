@@ -42,7 +42,6 @@ export default function Footer() {
   return (
     <footer id="contact" className="relative pt-24 pb-8 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-dark to-navy-700" />
       <div className="absolute inset-0 bg-grid-pattern opacity-5" />
 
       {/* Top wave decoration */}

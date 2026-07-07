@@ -79,9 +79,9 @@ export default function AutonomousEcosystem() {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null)
 
   return (
-    <section className="relative py-16 sm:py-32 overflow-hidden bg-navy-950">
+    <section className="relative py-16 sm:py-32 overflow-hidden">
       {/* Background Grid & Glow */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,240,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,240,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,240,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(0,240,255,0.06)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)]" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -93,7 +93,7 @@ export default function AutonomousEcosystem() {
           className="text-center mb-12 sm:mb-20"
         >
           <h2 className="font-heading text-3xl sm:text-5xl md:text-6xl font-black text-white mb-4 sm:mb-6 tracking-tight">
-            THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">HIVE MIND</span>
+            THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 [filter:drop-shadow(0_2px_10px_rgba(0,0,0,0.6))]">HIVE MIND</span>
           </h2>
           <p className="font-body text-base sm:text-xl text-slate-400 max-w-2xl mx-auto px-4">
             One integrated fleet — air, surface and subsurface platforms sharing a single command network.
@@ -107,21 +107,25 @@ export default function AutonomousEcosystem() {
             initial={{ rotateX: 45, scale: 0.8, opacity: 0 }}
             animate={isInView ? { rotateX: 25, scale: 1, opacity: 1 } : {}}
             transition={{ duration: 1.5, ease: "easeOut" }}
-            className="relative w-full h-full transform-style-3d bg-navy-900/20 border border-cyan-500/20 rounded-full shadow-[0_0_100px_rgba(0,240,255,0.1)] backdrop-blur-sm overflow-hidden"
+            className="relative w-full h-full transform-style-3d bg-navy-900/30 border border-cyan-500/20 rounded-[2.5rem] shadow-[0_0_100px_rgba(0,240,255,0.1)] backdrop-blur-sm"
           >
-            {/* Radar Scan Effect */}
-            <div className="absolute inset-0 rounded-full overflow-hidden">
-              <div className="absolute top-1/2 left-1/2 w-[1000px] h-[1000px] -translate-x-1/2 -translate-y-1/2 bg-[conic-gradient(from_0deg,transparent_0deg,rgba(0,240,255,0.1)_60deg,transparent_60deg)] animate-[spin_4s_linear_infinite]" />
-            </div>
+            {/* Radar visual — kept circular in its own centered box so it doesn't
+                stretch into a stadium shape and clip nodes near the container edges */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="relative w-[90%] aspect-square max-h-full rounded-full overflow-hidden">
+                {/* Radar Scan Effect */}
+                <div className="absolute top-1/2 left-1/2 w-[1000px] h-[1000px] -translate-x-1/2 -translate-y-1/2 bg-[conic-gradient(from_0deg,transparent_0deg,rgba(0,240,255,0.15)_60deg,transparent_60deg)] animate-[spin_4s_linear_infinite]" />
 
-            {/* Concentric Rings */}
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-500/10"
-                style={{ width: `${i * 30}%`, height: `${i * 30}%` }}
-              />
-            ))}
+                {/* Concentric Rings */}
+                {[1, 2, 3].map((i) => (
+                  <div
+                    key={i}
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-500/20"
+                    style={{ width: `${i * 30}%`, height: `${i * 30}%` }}
+                  />
+                ))}
+              </div>
+            </div>
 
             {/* Connections */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none">

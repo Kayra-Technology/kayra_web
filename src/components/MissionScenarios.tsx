@@ -49,7 +49,7 @@ export default function MissionScenarios() {
   const isMobile = useIsMobile()
 
   return (
-    <section className="py-24 bg-navy-900 relative overflow-hidden">
+    <section className="py-24 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500 rounded-full blur-[128px]" />
@@ -128,7 +128,7 @@ export default function MissionScenarios() {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="relative h-[600px] rounded-2xl overflow-hidden border border-white/10 bg-navy-950"
+            className="relative h-[600px] rounded-2xl overflow-hidden border border-white/10 bg-navy-900"
           >
             {/* Grid Overlay */}
             <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20 pointer-events-none" />
@@ -140,11 +140,11 @@ export default function MissionScenarios() {
                 className="w-full h-full"
               />
               {/* Overlay gradient for better text readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-transparent to-navy-950/30" />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-900/80 via-transparent to-navy-900/30" />
             </div>
 
             {/* UI Overlay */}
-            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-navy-950 to-transparent">
+            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-navy-900 to-transparent">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />

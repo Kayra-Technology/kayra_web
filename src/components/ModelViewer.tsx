@@ -13,10 +13,10 @@ interface ModelViewerProps {
 // Loading placeholder component
 function LoadingPlaceholder() {
     return (
-        <div className="absolute inset-0 flex items-center justify-center bg-navy-900/50">
+        <div className="absolute inset-0 flex items-center justify-center bg-slate-200/70">
             <div className="text-center">
                 <div className="w-12 h-12 border-2 border-cyan-DEFAULT border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                <p className="text-sm text-metallic-DEFAULT font-mono">Loading 3D Model...</p>
+                <p className="text-sm text-navy-700 font-mono">Loading 3D Model...</p>
             </div>
         </div>
     )
@@ -34,9 +34,12 @@ export default function ModelViewer({ vehicleId }: ModelViewerProps) {
                 shadows
                 dpr={[1, 1.5]}
                 camera={{ position: [8, 4, 12], fov: 40 }}
-                gl={{ preserveDrawingBuffer: true, alpha: true, antialias: false, powerPreference: 'high-performance' }}
+                gl={{ preserveDrawingBuffer: true, alpha: false, antialias: false, powerPreference: 'high-performance' }}
                 onCreated={() => setIsLoaded(true)}
             >
+                {/* Whitish-gray backdrop — max contrast for model silhouettes, doesn't touch vehicle materials */}
+                <color attach="background" args={['#E5E7EB']} />
+
                 <Suspense fallback={null}>
                     {/* HDRI Environment for realistic reflections */}
                     <Environment preset="city" />
@@ -63,12 +66,12 @@ export default function ModelViewer({ vehicleId }: ModelViewerProps) {
                     {/* Additional dramatic lighting */}
                     <pointLight position={[10, 10, 10]} intensity={1.5} color="#00F0FF" distance={20} />
                     <pointLight position={[-10, -5, -10]} intensity={1} color="#EAB308" distance={20} />
-                    <ambientLight intensity={0.2} />
+                    <ambientLight intensity={0.6} />
 
                     {/* Post-Processing Effects - Simplified for performance */}
                     <EffectComposer>
                         <Bloom luminanceThreshold={1} mipmapBlur intensity={1.2} radius={0.5} />
-                        <Vignette eskil={false} offset={0.1} darkness={0.4} />
+                        <Vignette eskil={false} offset={0.1} darkness={0.15} />
                     </EffectComposer>
 
                     {/* OrbitControls inside Suspense for proper initialization */}
