@@ -5,7 +5,9 @@ import { useState } from 'react'
 import { Waves, Plane, Anchor, Rocket } from 'lucide-react'
 import Image from 'next/image'
 
-const gallery = [
+type Stage = { name: string; image: string; caption: string; fit?: 'contain' }
+
+const gallery: { id: string; name: string; subtitle: string; icon: typeof Waves; stages: Stage[] }[] = [
   {
     id: 'usv',
     name: 'KAYRA USV',
