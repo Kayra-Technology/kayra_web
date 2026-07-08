@@ -85,9 +85,8 @@ export default function HeroSection() {
       {/* Background photo — confined to the hero viewport only, so the
           logo scrolls away with it instead of following down the page.
           Its own bottom edge fades to transparent (mask, not a solid
-          color) so what shows through is the flat navy body background
-          underneath — the only light sheen on the page is this one,
-          baked into the photo itself. */}
+          color) so what shows through is body's lacquer-navy-full
+          sheen continuing underneath. */}
       <div
         className="absolute inset-0 z-0"
         style={{
