@@ -103,6 +103,15 @@ export default function HeroSection() {
           className="object-cover object-[50%_20%] sm:object-[70%_30%] md:object-right"
           sizes="100vw"
         />
+        {/* The source photo blows out to a pale washed-out highlight in
+            its top-right corner — tame it back to the navy palette
+            instead of re-exporting the asset for every crop variant. */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse 75% 65% at 100% 0%, #0B1C3E 0%, rgba(11,28,62,0.9) 35%, rgba(11,28,62,0.5) 55%, rgba(11,28,62,0) 75%)',
+          }}
+        />
       </div>
 
       {/* Floating particles */}
