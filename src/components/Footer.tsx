@@ -1,8 +1,20 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Mail, MapPin, ArrowRight } from 'lucide-react'
+import { Mail, MapPin, ArrowRight, CheckCircle2 } from 'lucide-react'
 import { useState } from 'react'
+
+/* Native contact form backed by the Kayra Google Form: submissions are POSTed
+   to its formResponse endpoint, so every message lands in the same Google
+   Forms responses/Sheet as before. Entry IDs come from the form's field IDs —
+   if the form's questions are ever edited, these IDs must be refreshed. */
+const GOOGLE_FORM_ACTION =
+  'https://docs.google.com/forms/d/e/1FAIpQLScSdPLEacU7Khrsyy7lpJR7nPRNrCYbdTDY32i9hjsVP9se0Q/formResponse'
+const FORM_FIELDS = {
+  message: 'entry.1573123684',
+  phone: 'entry.22136536',
+  email: 'entry.922205624',
+}
 
 // Custom North Star icon - matching KAYRA background logo style
 function NorthStar({ className = '' }: { className?: string }) {
@@ -36,8 +48,35 @@ const footerLinks = {
 }
 
 export default function Footer() {
-  // No state needed for direct link
+  const [form, setForm] = useState({ email: '', phone: '', message: '' })
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
 
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setStatus('sending')
+    const body = new URLSearchParams({
+      [FORM_FIELDS.message]: form.message,
+      [FORM_FIELDS.phone]: form.phone,
+      [FORM_FIELDS.email]: form.email,
+    })
+    try {
+      // no-cors: Google Forms doesn't send CORS headers; the response is
+      // opaque but the submission is recorded (endpoint verified manually)
+      await fetch(GOOGLE_FORM_ACTION, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
+      })
+      setStatus('sent')
+      setForm({ email: '', phone: '', message: '' })
+    } catch {
+      setStatus('error')
+    }
+  }
+
+  const inputClass =
+    'w-full px-4 py-3 rounded-lg bg-navy-900/60 border border-ocean-DEFAULT/30 text-sm text-white placeholder-metallic-dark focus:border-cyan-DEFAULT/70 focus:outline-none focus:ring-1 focus:ring-cyan-DEFAULT/40 transition-colors'
 
   return (
     <footer id="contact" className="relative pt-24 pb-8 overflow-hidden">
@@ -56,28 +95,77 @@ export default function Footer() {
           transition={{ duration: 0.6 }}
           className="glass rounded-2xl p-8 md:p-12 mb-16 border border-ocean-DEFAULT/20"
         >
-          <div className="grid md:grid-cols-2 gap-8 items-center">
+          <div className="grid md:grid-cols-2 gap-8 items-start">
             <div>
               <h3 className="font-heading text-2xl md:text-3xl font-bold text-white mb-4">
-                Lead the <span className="text-gradient">Autonomous Revolution</span>
+                Get in <span className="text-gradient">Touch</span>
               </h3>
               <p className="font-body text-metallic-DEFAULT">
-                Subscribe to receive updates on our latest innovations, industry
-                insights, and exclusive technical content.
+                Send us your message or partnership inquiries — we&apos;ll get back
+                to you. You can also reach us directly at{' '}
+                <a
+                  href="mailto:kurumsal@kayra.technology"
+                  className="text-cyan-DEFAULT hover:underline"
+                >
+                  kurumsal@kayra.technology
+                </a>
+                .
               </p>
             </div>
             <div>
-              <div className="flex gap-3">
-                <motion.button
-                  onClick={() => window.open('https://forms.gle/eGH3r1oZZdDyrCwg6', '_blank')}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full px-8 py-4 bg-gradient-to-r from-cyan-DEFAULT to-ocean-DEFAULT rounded-lg font-heading font-semibold text-navy-DEFAULT flex items-center justify-center gap-2 shadow-lg shadow-cyan-DEFAULT/20 hover:shadow-cyan-DEFAULT/40 transition-shadow"
-                >
-                  Contact Us
-                  <ArrowRight className="w-5 h-5" />
-                </motion.button>
-              </div>
+              {status === 'sent' ? (
+                <div className="flex flex-col items-center justify-center gap-3 py-10 text-center">
+                  <CheckCircle2 className="w-10 h-10 text-cyan-DEFAULT" />
+                  <p className="font-heading font-semibold text-white">Message sent</p>
+                  <p className="font-body text-sm text-metallic-DEFAULT">
+                    Thank you — we&apos;ll be in touch shortly.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-3">
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    <input
+                      type="email"
+                      required
+                      placeholder="Email address"
+                      value={form.email}
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      className={inputClass}
+                    />
+                    <input
+                      type="tel"
+                      required
+                      placeholder="Phone number"
+                      value={form.phone}
+                      onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                      className={inputClass}
+                    />
+                  </div>
+                  <textarea
+                    required
+                    rows={4}
+                    placeholder="Your message"
+                    value={form.message}
+                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    className={`${inputClass} resize-none`}
+                  />
+                  <motion.button
+                    type="submit"
+                    disabled={status === 'sending'}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full px-8 py-4 bg-gradient-to-r from-cyan-DEFAULT to-ocean-DEFAULT rounded-lg font-heading font-semibold text-navy-DEFAULT flex items-center justify-center gap-2 shadow-lg shadow-cyan-DEFAULT/20 hover:shadow-cyan-DEFAULT/40 transition-shadow disabled:opacity-60"
+                  >
+                    {status === 'sending' ? 'Sending…' : 'Send Message'}
+                    <ArrowRight className="w-5 h-5" />
+                  </motion.button>
+                  {status === 'error' && (
+                    <p className="font-body text-sm text-red-400 text-center">
+                      Something went wrong — please email us at kurumsal@kayra.technology.
+                    </p>
+                  )}
+                </form>
+              )}
             </div>
           </div>
         </motion.div>
@@ -125,30 +213,10 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="pt-8 border-t border-ocean-DEFAULT/20">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex justify-center items-center">
             <p className="font-body text-sm text-metallic-dark">
-              &copy; 2025 Kayra Technology. All rights reserved.
+              &copy; 2026 Kayra Technology. All rights reserved.
             </p>
-            <div className="flex gap-6">
-              <a
-                href="#"
-                className="font-body text-sm text-metallic-dark hover:text-cyan-DEFAULT transition-colors"
-              >
-                Privacy Policy
-              </a>
-              <a
-                href="#"
-                className="font-body text-sm text-metallic-dark hover:text-cyan-DEFAULT transition-colors"
-              >
-                Terms of Service
-              </a>
-              <a
-                href="#"
-                className="font-body text-sm text-metallic-dark hover:text-cyan-DEFAULT transition-colors"
-              >
-                Cookie Policy
-              </a>
-            </div>
           </div>
         </div>
 

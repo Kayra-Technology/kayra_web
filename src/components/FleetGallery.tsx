@@ -11,10 +11,10 @@ const gallery: { id: string; name: string; subtitle: string; icon: typeof Waves;
   {
     id: 'usv',
     name: 'KAYRA USV',
-    subtitle: 'Unmanned Surface Vehicle',
+    subtitle: 'Training Surface Vehicle',
     icon: Waves,
     stages: [
-      { name: 'Field Test', image: '/images/fleet-photos/usv.jpeg', caption: 'On-water trial run ahead of autonomy testing.' },
+      { name: 'Field Test', image: '/images/fleet-photos/usv.jpeg', caption: 'On-water trial run of the training vessel.' },
     ],
   },
   {
@@ -23,7 +23,7 @@ const gallery: { id: string; name: string; subtitle: string; icon: typeof Waves;
     subtitle: 'Catamaran Surface Vehicle',
     icon: Waves,
     stages: [
-      { name: 'Field Test', image: '/images/fleet-photos/cusv.jpeg', caption: 'Catamaran hull with sensor mast and camera gimbal, on the lake.' },
+      { name: 'Field Test', image: '/images/fleet-photos/cusv.jpeg', caption: 'Fully autonomous test run on the lake.' },
     ],
   },
   {

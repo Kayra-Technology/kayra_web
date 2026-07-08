@@ -27,27 +27,27 @@ const fleet = [
   {
     id: 'usv' as const,
     name: 'KAYRA USV',
-    subtitle: 'Unmanned Surface Vehicle',
+    subtitle: 'Training Surface Vehicle',
     turkishName: 'İDA - İnsansız Deniz Aracı',
     icon: Waves,
-    description: 'Autonomous surface vessel powered by Jetson Orin Nano Super running ROS 2 Jazzy on Ubuntu 24.04. Features 3D LiDAR, stereo camera, and AI-powered computer vision with OpenCV & YOLO.',
+    description: 'Remotely operated training vessel for surface operations — a rugged, low-cost platform for crew training, hull and propulsion testing, and payload integration trials.',
     color: 'from-ocean-DEFAULT to-cyan-DEFAULT',
     bgColor: 'from-ocean-DEFAULT/20 to-cyan-DEFAULT/10',
     specs: [
       { icon: Ruler, label: 'Dimensions', value: '80x24x23cm' },
       { icon: Gauge, label: 'Speed', value: '2.5 kts' },
-      { icon: Timer, label: 'Operation', value: '5+ hours' },
+      { icon: Timer, label: 'Operation', value: '10+ hours' },
       { icon: Weight, label: 'Payload', value: '20 kg' },
-      { icon: Battery, label: 'Computer', value: 'Jetson Orin' },
+      { icon: Battery, label: 'Thrust', value: '7 kg' },
       { icon: Radio, label: 'Range', value: '40+ km' },
     ],
     capabilities: [
-      'Jetson Orin Nano Super',
-      'ROS 2 Jazzy + Ubuntu 24.04',
-      '3D LiDAR & Stereo Camera',
-      'OpenCV + YOLO AI Vision',
+      'Training & Test Platform',
       'Dual-Motor Propulsion',
-      'Point Cloud Processing',
+      '7 kg Combined Thrust',
+      '10+ Hour Endurance',
+      '20 kg Payload Capacity',
+      'Long-Range RC Link',
     ],
   },
   {
@@ -57,8 +57,8 @@ const fleet = [
     turkishName: 'ROV - Uzaktan Kumandalı Sualtı Aracı',
     icon: Anchor,
     description: 'Inspection Class Remotely Operated Vehicle featuring Cast Polyamide Chassis with Acrylic Watertight Enclosure. Powered by Raspberry Pi 5 or Gemstone running ROS 2 Humble Hawksbill on Ubuntu 22.04 LTS.',
-    color: 'from-yellow-500 to-orange-500',
-    bgColor: 'from-yellow-500/20 to-orange-500/10',
+    color: 'from-ocean-DEFAULT to-cyan-DEFAULT',
+    bgColor: 'from-ocean-DEFAULT/20 to-cyan-DEFAULT/10',
     specs: [
       { icon: Ruler, label: 'Dimensions', value: '440x300x220mm' },
       { icon: Gauge, label: 'Thrusters', value: '6-Vector' },
@@ -152,13 +152,13 @@ const fleet = [
     subtitle: 'Recoverable Model Rocket',
     turkishName: 'Roket - Kurtarılabilir Model Roket',
     icon: Rocket,
-    description: 'Low-cost, fully recoverable model rocket developed for research and competition missions. ½ power nose cone and clipped delta fins deliver minimum drag across its flight speed profile, with a 2.41 stability margin ensuring straight, stable flight.',
-    color: 'from-orange-500 to-red-500',
-    bgColor: 'from-orange-500/20 to-red-500/10',
+    description: 'Low-cost, fully recoverable model rocket developed for research and competition missions. ½ power nose cone and clipped delta fins deliver minimum drag across its flight speed profile, with a 2.4 stability margin ensuring straight, stable flight.',
+    color: 'from-ocean-DEFAULT to-cyan-DEFAULT',
+    bgColor: 'from-ocean-DEFAULT/20 to-cyan-DEFAULT/10',
     specs: [
       { icon: CircleDollarSign, label: 'Cost', value: 'Low-Cost' },
-      { icon: Ruler, label: 'Dimensions', value: '32.3×2.5 cm' },
-      { icon: Rocket, label: 'Apogee', value: '500+ m' },
+      { icon: Ruler, label: 'Dimensions', value: '31.3×2.5 cm' },
+      { icon: Rocket, label: 'Apogee', value: '160+ m' },
       { icon: Gauge, label: 'Max Speed', value: '46.1 m/s' },
       { icon: Weight, label: 'Liftoff Mass', value: '68.9 g' },
       { icon: Umbrella, label: 'Recovery', value: 'Parachute' },
@@ -168,7 +168,7 @@ const fleet = [
       'Fully Recoverable via Parachute',
       '½ Power Nose Cone — 2.8 Fineness Ratio',
       'Clipped Delta Balsa Fins',
-      'Stability Margin 2.41 — Stable Flight',
+      'Stability Margin 2.4 — Stable Flight',
       'ABS Airframe & Nose Cone',
       '19 G Max Acceleration Tolerance',
       'Safe Descent — 6.63 m/s Touchdown',
@@ -362,7 +362,7 @@ export default function FleetShowcase() {
                         <span className="inline-block px-6 sm:px-8 py-3 sm:py-4 font-heading text-lg sm:text-2xl font-bold tracking-widest text-white bg-gradient-to-r from-teal-500/30 to-cyan-500/30 border-cyan-400/50 shadow-[0_0_40px_rgba(0,240,255,0.3)] border-2 rounded-lg backdrop-blur-sm">
                           COMING SOON
                         </span>
-                        <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-slate-400">Geliştirme aşamasında</p>
+                        <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-slate-400">Currently in development</p>
                       </div>
                     </div>
                   )}

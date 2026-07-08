@@ -4,6 +4,10 @@ import { motion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { Waves, Plane, Anchor, Satellite, Server, Rocket } from 'lucide-react'
 
+/* Node layout: C-USV is the hub at dead center, SATCOM directly above it,
+   UAV top-left, Ground Control mid-left, ROV and TORPEDO on the bottom row.
+   Positions are chosen so no connection line passes over another node or
+   crosses another line. */
 const ecosystemNodes = [
   {
     id: 'satellite',
@@ -17,7 +21,7 @@ const ecosystemNodes = [
     id: 'uav',
     icon: Plane,
     label: 'UAV',
-    position: { x: '22%', y: '28%' },
+    position: { x: '26%', y: '14%' },
     color: 'text-cyan-400',
     description: 'Aerial reconnaissance — MAVLink telemetry, 2+ km custom RC link',
   },
@@ -25,23 +29,15 @@ const ecosystemNodes = [
     id: 'cusv',
     icon: Waves,
     label: 'C-USV',
-    position: { x: '62%', y: '42%' },
+    position: { x: '50%', y: '46%' },
     color: 'text-blue-400',
     description: 'Catamaran command node — 22h+ endurance, SAT + 40 km reach',
-  },
-  {
-    id: 'usv',
-    icon: Waves,
-    label: 'USV',
-    position: { x: '38%', y: '48%' },
-    color: 'text-cyan-400',
-    description: 'Autonomous surface vessel — Jetson Orin + ROS 2 autonomy',
   },
   {
     id: 'rov',
     icon: Anchor,
     label: 'ROV',
-    position: { x: '40%', y: '78%' },
+    position: { x: '38%', y: '80%' },
     color: 'text-yellow-400',
     description: 'Subsea inspection — 50 m tethered low-latency Ethernet link',
   },
@@ -49,7 +45,7 @@ const ecosystemNodes = [
     id: 'torpedo',
     icon: Rocket,
     label: 'TORPEDO · DEV',
-    position: { x: '68%', y: '76%' },
+    position: { x: '64%', y: '80%' },
     color: 'text-teal-400',
     description: 'Fiber-optic guided subsurface platform — in development',
   },
@@ -57,7 +53,7 @@ const ecosystemNodes = [
     id: 'gcs',
     icon: Server,
     label: 'Ground Control',
-    position: { x: '15%', y: '68%' },
+    position: { x: '26%', y: '48%' },
     color: 'text-green-400',
     description: 'Shore station — mission planning, live monitoring and emergency stop',
   },
@@ -65,11 +61,9 @@ const ecosystemNodes = [
 
 const connections = [
   { from: 'satellite', to: 'cusv' },
-  { from: 'gcs', to: 'usv' },
   { from: 'gcs', to: 'cusv' },
   { from: 'gcs', to: 'uav' },
-  { from: 'usv', to: 'cusv' },
-  { from: 'usv', to: 'rov' },
+  { from: 'cusv', to: 'rov' },
   { from: 'cusv', to: 'torpedo' },
 ]
 
@@ -92,8 +86,10 @@ export default function AutonomousEcosystem() {
           viewport={{ once: true }}
           className="text-center mb-12 sm:mb-20"
         >
-          <h2 className="font-heading text-3xl sm:text-5xl md:text-6xl font-black text-white mb-4 sm:mb-6 tracking-tight">
-            THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 [filter:drop-shadow(0_2px_10px_rgba(0,0,0,0.6))]">HIVE MIND</span>
+          {/* drop-shadow lives on the h2, not the gradient span — a filter on the
+              same element as background-clip:text makes the text invisible in Chromium */}
+          <h2 className="font-heading text-3xl sm:text-5xl md:text-6xl font-black text-white mb-4 sm:mb-6 tracking-tight [filter:drop-shadow(0_2px_10px_rgba(0,0,0,0.6))]">
+            THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">HIVE MIND</span>
           </h2>
           <p className="font-body text-base sm:text-xl text-slate-400 max-w-2xl mx-auto px-4">
             One integrated fleet — air, surface and subsurface platforms sharing a single command network.
@@ -192,7 +188,9 @@ export default function AutonomousEcosystem() {
                 )
               })}
               <defs>
-                <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                {/* userSpaceOnUse: default objectBoundingBox breaks on perfectly
+                    vertical/horizontal lines (zero-area bbox → invisible stroke) */}
+                <linearGradient id="connectionGradient" gradientUnits="userSpaceOnUse" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="#00F0FF" />
                   <stop offset="100%" stopColor="#0077BE" />
                 </linearGradient>

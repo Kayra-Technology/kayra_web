@@ -31,16 +31,16 @@ const scenarios = [
   {
     id: 'defense',
     title: 'Perimeter Defense',
-    description: 'Autonomous patrol patterns with anomaly detection. Swarm intelligence enables coordinated interception of unauthorized vessels.',
+    description: 'Autonomous patrol patterns with anomaly detection. Fleet-level coordination over a single command network enables rapid response to unauthorized vessels.',
     icon: Shield,
-    features: ['Swarm Interception', 'Anomaly Detection', '24/7 Autonomous Patrol']
+    features: ['Coordinated Response', 'Anomaly Detection', '22h+ Autonomous Patrol']
   },
   {
     id: 'survey',
     title: 'Hydrographic Survey',
-    description: 'High-precision bathymetric mapping using multi-beam sonar. Automated data processing generates 3D terrain models in real-time.',
+    description: 'Systematic survey patterns with automated data processing — LiDAR and camera data fused into georeferenced maps of the operating area in real-time.',
     icon: Target,
-    features: ['Sub-millimeter Precision', 'Real-time 3D Mapping', 'Automated Data Processing']
+    features: ['Automated Survey Patterns', 'Real-time 3D Mapping', 'Automated Data Processing']
   }
 ]
 
@@ -131,7 +131,7 @@ export default function MissionScenarios() {
             className="relative h-[600px] rounded-2xl overflow-hidden border border-white/10 bg-navy-900"
           >
             {/* Grid Overlay */}
-            <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20 pointer-events-none" />
+            <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none" />
 
             {/* Video Visualization */}
             <div className="absolute inset-0">
@@ -145,14 +145,9 @@ export default function MissionScenarios() {
 
             {/* UI Overlay */}
             <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-navy-900 to-transparent">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  <span className="font-mono text-xs text-green-500">SYSTEM ACTIVE</span>
-                </div>
-                <div className="font-mono text-xs text-metallic-dark">
-                  COORD: 34.0522° N, 118.2437° W
-                </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <span className="font-mono text-xs text-green-500">SYSTEM ACTIVE</span>
               </div>
             </div>
           </motion.div>
