@@ -33,13 +33,19 @@ body {
 /* Lacquer-navy sheen down the document, mirrored (115deg, leans "/")
    against the hero photo's own "\" sheen so the two read as distinct.
    Soft/blurry fade (crisp edges are reserved for the hero photo itself),
-   stretched to a ~2600px period so only 2-3 bands show up across a
-   typical page instead of one every 900px. background-position pushes
-   the first band well down past the hero instead of it peaking right
-   after the fold. */
+   held flat at the dark base color for the first ~1650px of each
+   ~2600px period so only 2-3 bands show up across a typical page and
+   the first one lands well past the hero fold. The phase is baked
+   directly into the stop positions rather than done via
+   background-position — a non-zero background-position on a gradient
+   this tall triggers a Chromium tiling/rasterization seam (a visible
+   hard line partway down the page); stops-only keeps background-
+   position at its default 0 0, which doesn't hit that bug. */
 .lacquer-navy-full {
-  background-image: repeating-linear-gradient(115deg, #0B1C3E 0px, #16305c 650px, #2c5490 1170px, #3c6baf 1430px, #2c5490 1690px, #16305c 2080px, #0B1C3E 2600px);
-  background-position: 0 2400px;
+  background-image: repeating-linear-gradient(115deg,
+    #0B1C3E 0px, #0B1C3E 1650px,
+    #16305c 2100px, #2c5490 2180px, #3c6baf 2220px, #2c5490 2260px, #16305c 2340px,
+    #0B1C3E 2600px);
 }
 
 /* Custom Scrollbar */
