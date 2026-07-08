@@ -30,22 +30,6 @@ body {
   min-height: 100vh;
 }
 
-/* One lacquer-navy sheen down the entire document on body itself,
-   instead of every section repainting its own independent copy (which
-   produced repeated dark/light/dark bands and hard seams at each
-   section boundary). A plain linear-gradient tiled with background-size
-   still seams here: it's diagonal, so each vertical tile restarts the
-   diagonal sweep at a different horizontal offset than the last one
-   ended on. repeating-linear-gradient instead repeats along its own
-   diagonal axis, in one motion, so there's no box-tiling seam to hit —
-   and pixel (not %) stops make the repeat period a fixed physical
-   distance, so the sheen reads the same size regardless of page length. */
-.lacquer-navy-full {
-  /* 65deg, not 115deg — the hero photo's sheen leans top-left to
-     bottom-right ("\"); 115deg mirrors that the other way ("/"). */
-  background-image: repeating-linear-gradient(65deg, #0B1C3E 0px, #16305c 225px, #2c5490 405px, #3c6baf 495px, #2c5490 585px, #16305c 720px, #0B1C3E 900px);
-}
-
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
