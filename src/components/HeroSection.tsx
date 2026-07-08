@@ -105,12 +105,14 @@ export default function HeroSection() {
         />
         {/* The source photo blows out to a pale, washed-out highlight
             running the length of its right side, not just the corner —
-            tame the whole thing back to the navy palette instead of
-            re-exporting the asset for every crop variant. */}
+            tame it back to the navy palette instead of re-exporting the
+            asset for every crop variant. Stays clear until well past
+            the centered logo (~63% width) so it doesn't wash the logo
+            out too — only the glare further right gets covered. */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: 'linear-gradient(to right, transparent 0%, transparent 30%, rgba(11,28,62,0.55) 55%, rgba(11,28,62,0.92) 80%, #0B1C3E 100%)',
+            background: 'linear-gradient(to right, transparent 0%, transparent 64%, rgba(11,28,62,0.65) 82%, #0B1C3E 100%)',
           }}
         />
       </div>

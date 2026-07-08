@@ -35,11 +35,11 @@ body {
    Soft/blurry fade (crisp edges are reserved for the hero photo itself),
    stretched to a ~2600px period so only 2-3 bands show up across a
    typical page instead of one every 900px. background-position pushes
-   the first band down past the hero instead of it peaking right at
-   the top of the page. */
+   the first band well down past the hero instead of it peaking right
+   after the fold. */
 .lacquer-navy-full {
   background-image: repeating-linear-gradient(115deg, #0B1C3E 0px, #16305c 650px, #2c5490 1170px, #3c6baf 1430px, #2c5490 1690px, #16305c 2080px, #0B1C3E 2600px);
-  background-position: 0 700px;
+  background-position: 0 2400px;
 }
 
 /* Custom Scrollbar */
