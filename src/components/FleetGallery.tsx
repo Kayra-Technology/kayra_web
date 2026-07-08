@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
-import { Waves, Plane, Anchor } from 'lucide-react'
+import { Waves, Plane, Anchor, Rocket } from 'lucide-react'
 import Image from 'next/image'
 
 const gallery = [
@@ -41,6 +41,15 @@ const gallery = [
     stages: [
       { name: 'ESP32 Based', image: '/images/fleet-photos/uav-esp32.jpeg', caption: 'Ultra-low-cost ESP32 flight controller builds, workshop bench test.' },
       { name: 'Gemstone UAV', image: '/images/fleet-photos/uav-gemstone.jpeg', caption: 'Gemstone companion-computer airframe running ArduCopter.' },
+    ],
+  },
+  {
+    id: 'rocket',
+    name: 'KAYRA ROCKET',
+    subtitle: 'Recoverable Model Rocket',
+    icon: Rocket,
+    stages: [
+      { name: 'Field Test', image: '/images/fleet-photos/rocket.jpeg', caption: 'Model rocket kit ready for launch — 31.3cm airframe, 2.4 stability margin.', fit: 'contain' as const },
     ],
   },
 ]
@@ -135,7 +144,7 @@ export default function FleetGallery() {
                   src={stage.image}
                   alt={`${vehicle.name} — ${stage.name}`}
                   fill
-                  className="object-cover"
+                  className={stage.fit === 'contain' ? 'object-contain bg-navy-DEFAULT' : 'object-cover'}
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
                 <div className="absolute bottom-4 right-4 pointer-events-none z-10">

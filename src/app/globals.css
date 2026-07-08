@@ -41,7 +41,9 @@ body {
    and pixel (not %) stops make the repeat period a fixed physical
    distance, so the sheen reads the same size regardless of page length. */
 .lacquer-navy-full {
-  background-image: repeating-linear-gradient(115deg, #0B1C3E 0px, #16305c 225px, #2c5490 405px, #3c6baf 495px, #2c5490 585px, #16305c 720px, #0B1C3E 900px);
+  /* 65deg, not 115deg — the hero photo's sheen leans top-left to
+     bottom-right ("\"); 115deg mirrors that the other way ("/"). */
+  background-image: repeating-linear-gradient(65deg, #0B1C3E 0px, #16305c 225px, #2c5490 405px, #3c6baf 495px, #2c5490 585px, #16305c 720px, #0B1C3E 900px);
 }
 
 /* Custom Scrollbar */
