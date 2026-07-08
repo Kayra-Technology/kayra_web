@@ -138,7 +138,7 @@ export default function FleetGallery() {
             className="grid lg:grid-cols-2 gap-6 sm:gap-12 items-center"
           >
             {/* Left - Photo */}
-            <div className="relative h-[320px] sm:h-[440px] lg:h-[520px] w-full">
+            <div className={stage.fit === 'contain' ? 'relative h-[500px] sm:h-[620px] lg:h-[720px] w-full' : 'relative h-[320px] sm:h-[440px] lg:h-[520px] w-full'}>
               <div className="relative h-full glass rounded-2xl border border-ocean-DEFAULT/30 overflow-hidden">
                 <Image
                   src={stage.image}
