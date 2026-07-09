@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Inter:wght@100..900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+/* Fonts load via next/font in layout.tsx (self-hosted at build time) — the
+   old render-blocking Google Fonts @import is gone on purpose. */
 
 @tailwind base;
 @tailwind components;
@@ -23,11 +24,23 @@ html {
 }
 
 body {
-  font-family: 'Inter', 'Roboto', sans-serif;
+  font-family: var(--font-inter), 'Roboto', sans-serif;
   background-color: #0B1C3E;
   color: #F8FAFC;
   overflow-x: hidden;
   min-height: 100vh;
+}
+
+/* Hero floating particles (see HeroSection) — CSS instead of per-div JS animation */
+@keyframes particle-float {
+  0%, 100% {
+    transform: translateY(0) scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(-100px) scale(1.5);
+    opacity: 1;
+  }
 }
 
 /* Lacquer-navy sheen down the document, mirrored (115deg, leans "/")

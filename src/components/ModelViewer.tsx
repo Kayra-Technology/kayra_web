@@ -1,10 +1,27 @@
 'use client'
 
-import { Suspense, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Stage, Float, Environment, PerspectiveCamera } from '@react-three/drei'
 import { EffectComposer, Bloom, Noise, Vignette } from '@react-three/postprocessing'
 import { USVModel, UAVModel, ROVModel, CUSVModel, RocketModel } from './VehicleModels'
+
+// Pause the render loop while the canvas is scrolled out of view — the scene
+// animates continuously (autoRotate/Float/Bloom), which otherwise burns GPU
+// for something nobody sees.
+function useInViewport<T extends HTMLElement>(ref: React.RefObject<T>) {
+    const [inView, setInView] = useState(true)
+    useEffect(() => {
+        if (!ref.current) return
+        const observer = new IntersectionObserver(
+            ([entry]) => setInView(entry.isIntersecting),
+            { rootMargin: '100px' }
+        )
+        observer.observe(ref.current)
+        return () => observer.disconnect()
+    }, [ref])
+    return inView
+}
 
 interface ModelViewerProps {
     vehicleId: 'usv' | 'uav' | 'rov' | 'cusv' | 'rocket' | 'torpedo';
@@ -24,25 +41,29 @@ function LoadingPlaceholder() {
 
 export default function ModelViewer({ vehicleId }: ModelViewerProps) {
     const [isLoaded, setIsLoaded] = useState(false)
+    const containerRef = useRef<HTMLDivElement>(null)
+    const inView = useInViewport(containerRef)
 
     return (
-        <div className="w-full h-full min-h-[400px] relative">
+        <div ref={containerRef} className="w-full h-full min-h-[400px] relative">
             {/* Loading state */}
             {!isLoaded && <LoadingPlaceholder />}
 
             <Canvas
                 shadows
                 dpr={[1, 1.5]}
+                frameloop={inView ? 'always' : 'never'}
                 camera={{ position: [8, 4, 12], fov: 40 }}
-                gl={{ preserveDrawingBuffer: true, alpha: false, antialias: false, powerPreference: 'high-performance' }}
+                gl={{ alpha: false, antialias: false, powerPreference: 'high-performance' }}
                 onCreated={() => setIsLoaded(true)}
             >
                 {/* Whitish-gray backdrop — max contrast for model silhouettes, doesn't touch vehicle materials */}
                 <color attach="background" args={['#E5E7EB']} />
 
                 <Suspense fallback={null}>
-                    {/* HDRI Environment for realistic reflections */}
-                    <Environment preset="city" />
+                    {/* HDRI Environment for realistic reflections — the same "city"
+                        HDR drei would fetch, self-hosted instead of the githack CDN */}
+                    <Environment files="/hdri/city.hdr" />
 
                     {/* Floating animation for aliveness */}
                     <Float

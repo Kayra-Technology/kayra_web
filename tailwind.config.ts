@@ -41,8 +41,8 @@ const config: Config = {
         glass: 'rgba(11, 28, 62, 0.75)',
       },
       fontFamily: {
-        heading: ['Exo 2', 'Rajdhani', 'sans-serif'],
-        body: ['Inter', 'Roboto', 'sans-serif'],
+        heading: ['var(--font-exo2)', 'Rajdhani', 'sans-serif'],
+        body: ['var(--font-inter)', 'Roboto', 'sans-serif'],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

@@ -1,10 +1,36 @@
 'use client'
 
 import { useRef, useMemo } from 'react'
-import { useLoader } from '@react-three/fiber'
-import { Center } from '@react-three/drei'
+import { Center, useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
-import { STLLoader } from 'three-stdlib'
+
+/* Models ship as Draco-compressed GLBs converted from the original CAD STLs —
+   same geometry (welded, positions only), ~40x smaller than the STLs they
+   replace. The Draco decoder is self-hosted under /draco/ so no third-party
+   CDN is involved. Extracts the first mesh's geometry in world space, so it
+   behaves exactly like the old STLLoader result. */
+const IDENTITY_MATRIX = new THREE.Matrix4()
+
+function useModelGeometry(path: string): THREE.BufferGeometry {
+    const { scene } = useGLTF(path, '/draco/')
+    return useMemo(() => {
+        let found: THREE.BufferGeometry | undefined
+        scene.updateMatrixWorld(true)
+        scene.traverse((child) => {
+            const mesh = child as THREE.Mesh
+            if (!found && mesh.isMesh) {
+                if (mesh.matrixWorld.equals(IDENTITY_MATRIX)) {
+                    found = mesh.geometry as THREE.BufferGeometry
+                } else {
+                    found = (mesh.geometry as THREE.BufferGeometry).clone()
+                    found.applyMatrix4(mesh.matrixWorld)
+                }
+            }
+        })
+        if (!found) throw new Error(`No mesh found in ${path}`)
+        return found
+    }, [scene, path])
+}
 
 // --- High-Fidelity Materials ---
 
@@ -14,6 +40,9 @@ const hullMaterial = new THREE.MeshStandardMaterial({
     metalness: 0.2, // Slight metallic feel
     side: THREE.DoubleSide,
     envMapIntensity: 2.0, // Catch more light/reflections
+    // GLBs carry no normals; flat shading recreates the exact faceted look the
+    // non-indexed STLs had (per-face normals) while keeping files small
+    flatShading: true,
 })
 
 const deckMaterial = new THREE.MeshStandardMaterial({
@@ -68,15 +97,8 @@ const yellowSubMaterial = new THREE.MeshStandardMaterial({
 // --- USV Model (Unmanned Surface Vehicle) - STL LOADED ---
 
 export function USVModel(props: any) {
-    const geometry = useLoader(STLLoader, '/models/usv.stl')
+    const geometry = useModelGeometry('/models/usv.glb')
     const meshRef = useRef<THREE.Mesh>(null)
-
-    // Ensure normals are computed for smooth shading
-    useMemo(() => {
-        if (geometry) {
-            geometry.computeVertexNormals()
-        }
-    }, [geometry])
 
     return (
         <group {...props} dispose={null}>
@@ -100,14 +122,8 @@ export function USVModel(props: any) {
 // --- UAV Model (Unmanned Aerial Vehicle) - STL LOADED ---
 
 export function UAVModel(props: any) {
-    const geometry = useLoader(STLLoader, '/models/uav.stl')
+    const geometry = useModelGeometry('/models/uav.glb')
     const meshRef = useRef<THREE.Mesh>(null)
-
-    useMemo(() => {
-        if (geometry) {
-            geometry.computeVertexNormals()
-        }
-    }, [geometry])
 
     return (
         <group {...props} dispose={null}>
@@ -131,14 +147,8 @@ export function UAVModel(props: any) {
 // --- Rocket Model - STL LOADED ---
 
 export function RocketModel(props: any) {
-    const geometry = useLoader(STLLoader, '/models/rocket.stl')
+    const geometry = useModelGeometry('/models/rocket.glb')
     const meshRef = useRef<THREE.Mesh>(null)
-
-    useMemo(() => {
-        if (geometry) {
-            geometry.computeVertexNormals()
-        }
-    }, [geometry])
 
     return (
         <group {...props} dispose={null}>
@@ -162,13 +172,7 @@ export function RocketModel(props: any) {
 // --- ROV Model (Remotely Operated Vehicle) - STL LOADED ---
 
 export function ROVModel(props: any) {
-    const geometry = useLoader(STLLoader, '/models/rov.stl')
-
-    useMemo(() => {
-        if (geometry) {
-            geometry.computeVertexNormals()
-        }
-    }, [geometry])
+    const geometry = useModelGeometry('/models/rov.glb')
 
     return (
         <group {...props} dispose={null}>
@@ -190,14 +194,8 @@ export function ROVModel(props: any) {
 // --- C-USV Model (Catamaran Unmanned Surface Vehicle) - STL LOADED ---
 
 export function CUSVModel(props: any) {
-    const geometry = useLoader(STLLoader, '/models/cusv.stl')
+    const geometry = useModelGeometry('/models/cusv.glb')
     const meshRef = useRef<THREE.Mesh>(null)
-
-    useMemo(() => {
-        if (geometry) {
-            geometry.computeVertexNormals()
-        }
-    }, [geometry])
 
     return (
         <group {...props} dispose={null}>

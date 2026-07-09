@@ -1,5 +1,11 @@
 import type { Metadata } from 'next'
+import { Exo_2, Inter } from 'next/font/google'
 import './globals.css'
+
+/* Self-hosted at build time by next/font — no render-blocking request to
+   Google Fonts at runtime. latin-ext covers the Turkish strings (İTÜ etc.). */
+const exo2 = Exo_2({ subsets: ['latin', 'latin-ext'], variable: '--font-exo2', display: 'swap' })
+const inter = Inter({ subsets: ['latin', 'latin-ext'], variable: '--font-inter', display: 'swap' })
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://kayra.technology'),
@@ -23,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${exo2.variable} ${inter.variable}`}>
       <body className="antialiased lacquer-navy-full">
         {children}
       </body>

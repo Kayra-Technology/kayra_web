@@ -14,27 +14,19 @@ const platforms = [
 // Floating particles for magical effect
 // Deterministic positions — Math.random here causes an SSR hydration
 // mismatch that mis-binds click handlers across the whole page.
+// Pure CSS animation (keyframes in globals.css): 50 individually-animated
+// framer-motion divs kept the main thread busy for a background flourish.
 function FloatingParticles() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(50)].map((_, i) => (
-        <motion.div
+      {[...Array(20)].map((_, i) => (
+        <div
           key={i}
           className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
           style={{
             left: `${(i * 37 + 13) % 100}%`,
             top: `${(i * 53 + 7) % 100}%`,
-          }}
-          animate={{
-            y: [0, -100, 0],
-            opacity: [0, 1, 0],
-            scale: [0, 1.5, 0],
-          }}
-          transition={{
-            duration: 4 + (i % 9) * 0.5,
-            repeat: Infinity,
-            delay: (i % 8) * 0.5,
-            ease: 'easeInOut',
+            animation: `particle-float ${4 + (i % 9) * 0.5}s ease-in-out ${(i % 8) * 0.5}s infinite`,
           }}
         />
       ))}
@@ -99,7 +91,7 @@ export default function HeroSection() {
           alt="KAYRA Technology Background"
           fill
           priority
-          quality={100}
+          quality={80}
           className="object-cover object-[50%_20%] sm:object-[70%_30%] md:object-right"
           sizes="100vw"
         />
