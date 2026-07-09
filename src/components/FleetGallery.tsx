@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { Waves, Plane, Anchor, Rocket } from 'lucide-react'
 import Image from 'next/image'
 
-type Stage = { name: string; image: string; caption: string; fit?: 'contain' }
+type Stage = { name: string; image: string; caption: string; fit?: 'contain'; landscape?: boolean; comingSoon?: boolean }
 
 const gallery: { id: string; name: string; subtitle: string; icon: typeof Waves; stages: Stage[] }[] = [
   {
@@ -52,6 +52,15 @@ const gallery: { id: string; name: string; subtitle: string; icon: typeof Waves;
     icon: Rocket,
     stages: [
       { name: 'Field Test', image: '/images/fleet-photos/rocket.jpeg', caption: 'Model rocket kit ready for launch — 31.3cm airframe, 2.4 stability margin.', fit: 'contain' as const },
+    ],
+  },
+  {
+    id: 'torpedo',
+    name: 'KAYRA TORPEDO',
+    subtitle: 'Fiber Optic Torpedo',
+    icon: Rocket,
+    stages: [
+      { name: 'Prototype', image: '/images/fleet-photos/torpedo.jpeg', caption: 'First hull prototype of the fiber-optic torpedo — currently in development, coming soon.', fit: 'contain' as const, landscape: true, comingSoon: true },
     ],
   },
 ]
@@ -140,7 +149,11 @@ export default function FleetGallery() {
             className="grid lg:grid-cols-2 gap-6 sm:gap-12 items-center"
           >
             {/* Left - Photo */}
-            <div className={stage.fit === 'contain' ? 'relative mx-auto h-[500px] w-[253px] sm:h-[620px] sm:w-[314px] lg:h-[720px] lg:w-[365px]' : 'relative h-[320px] sm:h-[440px] lg:h-[520px] w-full'}>
+            <div className={stage.fit === 'contain'
+              ? (stage.landscape
+                ? 'relative w-full aspect-[944/585]'
+                : 'relative mx-auto h-[500px] w-[253px] sm:h-[620px] sm:w-[314px] lg:h-[720px] lg:w-[365px]')
+              : 'relative h-[320px] sm:h-[440px] lg:h-[520px] w-full'}>
               <div className="relative h-full glass rounded-2xl border border-ocean-DEFAULT/30 overflow-hidden">
                 <Image
                   src={stage.image}
@@ -149,9 +162,19 @@ export default function FleetGallery() {
                   className={stage.fit === 'contain' ? 'object-contain bg-navy-DEFAULT' : 'object-cover'}
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
+                {stage.comingSoon && (
+                  <div className="absolute inset-0 backdrop-blur-[2px] bg-navy-900/30 flex items-center justify-center z-20">
+                    <div className="text-center">
+                      <span className="inline-block px-6 sm:px-8 py-3 sm:py-4 font-heading text-lg sm:text-2xl font-bold tracking-widest text-white bg-gradient-to-r from-teal-500/30 to-cyan-500/30 border-cyan-400/50 shadow-[0_0_40px_rgba(0,240,255,0.3)] border-2 rounded-lg backdrop-blur-sm">
+                        COMING SOON
+                      </span>
+                      <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-slate-300">Currently in development</p>
+                    </div>
+                  </div>
+                )}
                 <div className="absolute bottom-4 right-4 pointer-events-none z-10">
                   <div className="px-3 py-1 glass rounded-full border border-white/10 text-xs font-mono text-white/50">
-                    REAL HARDWARE
+                    {stage.comingSoon ? 'IN DEVELOPMENT' : 'REAL HARDWARE'}
                   </div>
                 </div>
               </div>

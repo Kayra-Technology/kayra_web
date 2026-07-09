@@ -4,7 +4,7 @@ import { Suspense, useEffect, useRef, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Stage, Float, Environment, PerspectiveCamera } from '@react-three/drei'
 import { EffectComposer, Bloom, Noise, Vignette } from '@react-three/postprocessing'
-import { USVModel, UAVModel, ROVModel, CUSVModel, RocketModel } from './VehicleModels'
+import { USVModel, UAVModel, ROVModel, CUSVModel, RocketModel, TorpedoModel } from './VehicleModels'
 
 // Pause the render loop while the canvas is scrolled out of view — the scene
 // animates continuously (autoRotate/Float/Bloom), which otherwise burns GPU
@@ -79,8 +79,7 @@ export default function ModelViewer({ vehicleId }: ModelViewerProps) {
                             {vehicleId === 'rov' && <ROVModel />}
                             {vehicleId === 'cusv' && <CUSVModel />}
                             {vehicleId === 'rocket' && <RocketModel />}
-                            {/* Representative visual — actual torpedo model TBD */}
-                            {vehicleId === 'torpedo' && <RocketModel />}
+                            {vehicleId === 'torpedo' && <TorpedoModel />}
                         </Stage>
                     </Float>
 

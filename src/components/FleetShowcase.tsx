@@ -357,7 +357,7 @@ export default function FleetShowcase() {
 
                   {/* Torpedo "Coming Soon" overlay — representative visual behind */}
                   {vehicle.id === 'torpedo' && (
-                    <div className="absolute inset-0 backdrop-blur-md bg-navy-900/60 flex items-center justify-center z-20">
+                    <div className="absolute inset-0 backdrop-blur-[2px] bg-navy-900/30 flex items-center justify-center z-20">
                       <div className="text-center">
                         <span className="inline-block px-6 sm:px-8 py-3 sm:py-4 font-heading text-lg sm:text-2xl font-bold tracking-widest text-white bg-gradient-to-r from-teal-500/30 to-cyan-500/30 border-cyan-400/50 shadow-[0_0_40px_rgba(0,240,255,0.3)] border-2 rounded-lg backdrop-blur-sm">
                           COMING SOON

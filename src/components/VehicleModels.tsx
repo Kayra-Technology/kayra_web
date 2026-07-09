@@ -169,6 +169,31 @@ export function RocketModel(props: any) {
     )
 }
 
+// --- Torpedo Model ---
+
+export function TorpedoModel(props: any) {
+    const geometry = useModelGeometry('/models/torpedo.glb')
+    const meshRef = useRef<THREE.Mesh>(null)
+
+    return (
+        <group {...props} dispose={null}>
+            <Center top>
+                <mesh
+                    ref={meshRef}
+                    geometry={geometry}
+                    material={hullMaterial}
+                    rotation={[0, 0, 0]}
+                    scale={1}
+                >
+                </mesh>
+            </Center>
+            <mesh position={[0, 0.5, 0]}>
+                <pointLight distance={3} intensity={2} color="#00F0FF" />
+            </mesh>
+        </group>
+    )
+}
+
 // --- ROV Model (Remotely Operated Vehicle) - STL LOADED ---
 
 export function ROVModel(props: any) {
