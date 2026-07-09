@@ -5,9 +5,9 @@ import { useRef, useState } from 'react'
 import { Waves, Plane, Anchor, Satellite, Server, Rocket } from 'lucide-react'
 
 /* Node layout: C-USV is the hub at dead center, SATCOM directly above it,
-   UAV top-left, Ground Control mid-left, ROV and TORPEDO on the bottom row.
-   Positions are chosen so no connection line passes over another node or
-   crosses another line. */
+   UAV top-left, Ground Control mid-right (linked only via SATCOM), ROV and
+   TORPEDO on the bottom row. Positions are chosen so no connection line
+   passes over another node or crosses another line. */
 const ecosystemNodes = [
   {
     id: 'satellite',
@@ -53,7 +53,7 @@ const ecosystemNodes = [
     id: 'gcs',
     icon: Server,
     label: 'Ground Control',
-    position: { x: '26%', y: '48%' },
+    position: { x: '74%', y: '8%' },
     color: 'text-green-400',
     description: 'Shore station — mission planning, live monitoring and emergency stop',
   },
@@ -61,8 +61,8 @@ const ecosystemNodes = [
 
 const connections = [
   { from: 'satellite', to: 'cusv' },
-  { from: 'gcs', to: 'cusv' },
-  { from: 'gcs', to: 'uav' },
+  { from: 'satellite', to: 'gcs' },
+  { from: 'uav', to: 'cusv' },
   { from: 'cusv', to: 'rov' },
   { from: 'cusv', to: 'torpedo' },
 ]
