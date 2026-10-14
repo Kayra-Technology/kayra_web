@@ -5,6 +5,13 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
 
+// kayra.technology sections; the education app (/egitim, /kariyer) shows the same three tabs.
+const sectionLinks = [
+  { name: 'Ar-Ge', href: '/', current: true },
+  { name: 'Eğitim', href: '/egitim', current: false },
+  { name: 'Kariyer', href: '/kariyer', current: false },
+]
+
 const navLinks = [
   { name: 'Technology', href: '#technology' },
   { name: 'Fleet', href: '#fleet' },
@@ -65,6 +72,19 @@ export default function Navbar() {
                 <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-gradient-to-r from-cyan-DEFAULT to-ocean-DEFAULT group-hover:w-full transition-all duration-300" />
               </motion.a>
             ))}
+            <span aria-hidden="true" className="h-5 w-px bg-white/20" />
+            <nav aria-label="Kayra bölümleri" className="flex items-center gap-8">
+              {sectionLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  aria-current={link.current ? 'page' : undefined}
+                  className={`relative font-body text-sm transition-colors hover:text-white ${link.current ? 'text-white after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:bg-gradient-to-r after:from-cyan-DEFAULT after:to-ocean-DEFAULT' : 'text-metallic-DEFAULT'}`}
+                >
+                  {link.name}
+                </a>
+              ))}
+            </nav>
           </div>
 
           {/* Mobile Menu Button */}
@@ -101,6 +121,14 @@ export default function Navbar() {
                   {link.name}
                 </motion.a>
               ))}
+              <nav aria-label="Kayra bölümleri" className="flex gap-6 pt-2">
+                {sectionLinks.map((link) => (
+                  <a key={link.name} href={link.href} aria-current={link.current ? 'page' : undefined}
+                    className={`font-body text-sm ${link.current ? 'text-white' : 'text-metallic-DEFAULT hover:text-cyan-DEFAULT'}`}>
+                    {link.name}
+                  </a>
+                ))}
+              </nav>
             </div>
           </motion.div>
         )}
